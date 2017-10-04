@@ -1,0 +1,15 @@
+<p>
+  <md-select placeholder="Activation Key" [(ngModel)]="settings.activationKey" (change)="fn_change()">
+    <md-option *ngFor="let key of keys" [value]="key.value">
+      {{ key.title }}
+    </md-option>
+  </md-select>
+</p>
+<div style="text-align: center;">
+  <p>
+    Hold the Activation Key and single click to hide the selected area.
+  </p>
+  <p>
+    Hold the Activation Key and double click to show all the hidden areas.
+  </p>
+</div>

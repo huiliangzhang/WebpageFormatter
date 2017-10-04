@@ -1,0 +1,9 @@
+.zhl_hovering {
+    -webkit-box-shadow:inset 0px 0px 0px 10px green;
+    -moz-box-shadow:inset 0px 0px 0px 10px green;
+    box-shadow:inset 0px 0px 0px 10px green;
+}
+
+.zhl_disappearing {
+    visibility: hidden;
+}

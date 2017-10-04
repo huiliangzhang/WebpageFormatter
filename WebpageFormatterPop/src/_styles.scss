@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+$app-primary: mat-palette($mat-indigo);
+$app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$app-theme: mat-light-theme($app-primary, $app-accent);
+.accent{
+    color: mat-color($app-accent);
+}

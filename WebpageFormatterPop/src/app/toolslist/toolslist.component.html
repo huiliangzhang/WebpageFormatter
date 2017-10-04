@@ -1,0 +1,31 @@
+
+
+<div style="margin-top:10px">
+  <md-chip-list>
+    <md-chip *ngFor="let dlink of settings.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" style="cursor:pointer" (click)="fn_open(dlink.value)">
+      {{dlink.title}}
+    </md-chip>
+  </md-chip-list>
+</div>
+
+<div style="margin-top:10px;">
+  <md-form-field class="demo-chip-list">
+    <md-chip-list mdPrefix #chipList>
+      <md-chip *ngFor="let dlink of settings.customlinks" [selectable]="selectable"
+               (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)"
+               style="cursor:pointer" (click)="fn_open(dlink.value)"
+               [removable]="removable" (remove)="remove(dlink)">
+        {{dlink.title}}
+        <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
+      </md-chip>
+      <md-chip (click)="fn_add()" mdTooltip="Add new web site..." mdTooltipPosition="below">
+        <span class="accent">+</span>
+      </md-chip>
+    </md-chip-list>
+  </md-form-field>
+
+</div>
+
+<div style="margin-top:10px;">
+  {{hovering.value}}
+</div>
