@@ -13,8 +13,7 @@
     </div>
   </div>
 
-
-  <md-tab-group>
+  <md-tab-group style="height:300px" selectedIndex="2">
     <md-tab label="Online tools">
       <app-toolslist [(settings)]="settings"></app-toolslist>
     </md-tab>
@@ -22,12 +21,9 @@
       <app-clicktotrigger [(settings)]="settings"></app-clicktotrigger>
     </md-tab>
     <md-tab label="Auto run">
-      <app-customcode [(settings)]="settings"></app-customcode>
+      <app-customcode #customecode [(settings)]="settings"></app-customcode>
     </md-tab>
   </md-tab-group>
-
-
-
 
   <div style="text-align:right; margin-top:20px">
     <a href="http://www.swiftformatter.com" target="_blank">swiftformatter.com</a>

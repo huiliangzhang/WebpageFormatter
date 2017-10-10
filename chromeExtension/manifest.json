@@ -15,6 +15,7 @@
 	"default_title": "Tool for changing webpage rendering"
   },
   "permissions": [
+    "tabs"
   ],
   "content_scripts": [
     {

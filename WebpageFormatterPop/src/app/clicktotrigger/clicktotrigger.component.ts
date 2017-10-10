@@ -24,8 +24,7 @@ export class ClicktotriggerComponent implements OnInit {
   }
 
   fn_change() {
-    console.log(this.settings.activationKey);
-	  chrome.runtime.sendMessage({messageType: "setSettings", type:"activationKey", value:this.settings.activationKey});
+	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
   }
 
 }

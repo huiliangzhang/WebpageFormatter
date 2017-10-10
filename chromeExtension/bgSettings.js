@@ -1,7 +1,7 @@
 var syncContentScript = function() {
 	chrome.tabs.query({currentWindow: true}, function(tabs) {
 	  tabs.forEach(function(x){
-		chrome.tabs.sendMessage(x.id, settings);		
+		chrome.tabs.sendMessage(x.id, {messageType:'updateSettings', value:settings});
 	  });
 	});	
 }
@@ -11,12 +11,19 @@ settings = JSON.parse(localStorage.getItem('settings'));
 if(!settings)
 {
   settings = {running: true};
-  settings.activationKey='alt';
-  settings.customlinks=[
+
+  settings.clicktohide={};
+  settings.clicktohide.activationKey='alt';
+
+  settings.favlinks={};
+  settings.favlinks.customlinks=[
     {title:'Facebook', value:'https://www.facebook.com'},
     {title:'Google', value:'https://www.google.com'},
     {title:'Yahoo', value:'https://www.yahoo.com'}
   ];
+
+  settings.autorun={};
+
 }
 settings.isMacLike=navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i)?true:false;
 syncContentScript();
@@ -38,13 +45,13 @@ var getJSON = function(url, callback) {
 getJSON("http://www.swiftformatter.com/assets/webformatter.json", function(err, data){
     if(!err)
     {
-      settings.defaultlinks=data.defaultlinks;
+      settings.favlinks.defaultlinks=data.defaultlinks;
     }
     else
     {
-        if(!settings.defaultlinks)
+        if(!settings.favlinks.defaultlinks)
         {
-            settings.defaultlinks=[];
+            settings.favlinks.defaultlinks=[];
         }
     }
 });
@@ -64,11 +71,24 @@ changeIcon();
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
 
+    if(sender.id!=chrome.runtime.id)
+    {
+        console.log(request, sender);
+        return;
+    }
+
 	if(request.messageType === 'askSettings')
 	{
       	sendResponse(settings);
 	}
-	else//update
+	else if(request.messageType === 'saveSettings')
+	{
+	    settings=request.value;
+        localStorage.setItem('settings', JSON.stringify(settings));
+		changeIcon();
+		syncContentScript();
+	}
+	else if(request.messageType === 'setSettings')//update
 	{
 		setSetting(request.type, request.value);
 		changeIcon();
@@ -98,3 +118,7 @@ chrome.runtime.onMessage.addListener(
     localStorage.setItem('settings', JSON.stringify(settings));
 
   }
+
+
+
+

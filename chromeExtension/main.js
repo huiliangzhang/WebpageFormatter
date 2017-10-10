@@ -4,14 +4,15 @@ var isActivated = function(e) {
 	{
 		return false;
 	}
-	
-	if((settings.activationKey == 'shift' && e.shiftKey) || 
-	   (settings.activationKey == 'alt' && e.altKey) ||
-	   (settings.activationKey == 'meta' && e.metaKey) ||
-	   (settings.activationKey == 'control' && e.ctrlKey))
+
+	if((settings.clicktohide.activationKey == 'shift' && e.shiftKey) ||
+	   (settings.clicktohide.activationKey == 'alt' && e.altKey) ||
+	   (settings.clicktohide.activationKey == 'meta' && e.metaKey) ||
+	   (settings.clicktohide.activationKey == 'control' && e.ctrlKey))
 	{
 		return true;
 	}
+
 	return false;
 }
 
@@ -25,7 +26,7 @@ var func_mousemove = function(e){
 		last_hover_element = null;
 		return;
 	}
-	
+
 	var target = e.target;	
 	if(last_hover_element != target)
 	{
@@ -36,8 +37,6 @@ var func_mousemove = function(e){
 }
 
 var originalTitle;
-
-
 var func_document_click = function(e){
 	if(!isActivated(e))
 	{
@@ -81,37 +80,59 @@ var syncSettings = function() {
 	if(settings.running)
 	{
 		document.addEventListener('mousemove', func_mousemove);
-		document.addEventListener('click', func_document_click);	
+		document.addEventListener('click', func_document_click);
+
+		//initial running
+		var currentUrl=document.location.href;
+        settings.autorun.customcodes.forEach(function(x){
+        	if(x.activated)
+        	{
+        		var websites = x.websites.split(/\s|;|,/);
+        		var matching=false;
+        		websites.forEach(function(y){
+        			if(!y)
+        				return;
+        			var reg = new RegExp(y, 'g');
+        			if(reg.test(currentUrl))
+        			{
+        				matching=true;
+        			}
+        		});
+
+        		if(matching)
+        		{
+        			try{
+	        			eval(x.script);
+        			}
+        			catch(e) {
+        				console.log(e);
+        			}
+        		}
+         	}
+        });
+
 	}
 	else
 	{
 		document.removeEventListener('mousemove', func_mousemove);
 		document.removeEventListener('click', func_document_click);			
 	}
-	
-	//this will disappear all images
-	//eval ("Array.prototype.slice.call(document.getElementsByTagName('img')).forEach(function(x){ x.style.display='none' });");
-    
-}
 
-chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
-	settings = response;
-	syncSettings();
-});
+}
 
 var styleClasses={
 	hoving:' zhl_hovering',
 	disappearing:' zhl_disappearing'
 };
 styleClasses.remove = function(element, name){
-	if(element && element.className && element.className.indexOf(styleClasses[name])!=-1)
+	if(element && element.className && element.className.indexOf && element.className.indexOf(styleClasses[name])!=-1)
 	{
 		element.className = element.className.replace(styleClasses[name], '');
 		element.childNodes.forEach(function(x){styleClasses.remove(x, name)});
 	}	
 }
 styleClasses.add = function(element, name){
-	if(element && element.className && element.className.indexOf(styleClasses[name])!=-1)
+	if(element && element.className && element.className.indexOf && element.className.indexOf(styleClasses[name])!=-1)
 	{
 		return;
 	}
@@ -125,14 +146,24 @@ styleClasses.add = function(element, name){
 	
 }
 
+chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
+	settings = response;
+	syncSettings();
+});
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-	if(request.type != 'askSettings')
+	if(request.messageType == 'updateSettings')
 	{
-		settings = request;
+		settings = request.value;
 		syncSettings();
 	}
   }
 );
 
+document.addEventListener("hello", function(data) {
+
+	console.log(data);
+    //chrome.runtime.sendMessage("test");
+});
 

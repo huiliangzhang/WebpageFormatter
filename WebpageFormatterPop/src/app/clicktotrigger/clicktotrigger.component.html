@@ -1,15 +1,22 @@
-<p>
-  <md-select placeholder="Activation Key" [(ngModel)]="settings.activationKey" (change)="fn_change()">
-    <md-option *ngFor="let key of keys" [value]="key.value">
-      {{ key.title }}
-    </md-option>
-  </md-select>
-</p>
-<div style="text-align: center;">
+<form>
   <p>
-    Hold the Activation Key and single click to hide the selected area.
+    <md-select placeholder="Activation Key" name="clicktotrigger_activationKey" [(ngModel)]="settings.clicktohide.activationKey" (change)="fn_change()">
+      <md-option *ngFor="let key of keys" [value]="key.value">
+        {{ key.title }}
+      </md-option>
+    </md-select>
   </p>
-  <p>
-    Hold the Activation Key and double click to show all the hidden areas.
-  </p>
-</div>
+  <div style="text-align: center;">
+    <p>
+      Hold the Activation Key and single click to hide the selected area.
+    </p>
+    <p>
+      Hold the Activation Key and double click to show all the hidden areas.
+    </p>
+  </div>
+
+  <md-form-field style="width:100%">
+    <input mdInput name="clicktotrigger_titleName" placeholder="Replace webpage title with" [(ngModel)]="settings.clicktohide.titleName" (change)="fn_change()">
+  </md-form-field>
+
+</form>

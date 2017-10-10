@@ -1,9 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 declare var chrome:any;
 
 import {DataSource} from '@angular/cdk/collections';
+import {MdSort} from '@angular/material';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+
 
 @Component({
   selector: 'app-customcode',
@@ -14,33 +19,148 @@ export class CustomcodeComponent implements OnInit {
 
   @Input() settings: any;
 
+  @ViewChild(MdSort) sort: MdSort;
+
   constructor() { }
 
+  go=0;
   ngOnInit() {
+    this.go++;
+    this.initialize();
+    console.log(this.sort);
   }
 
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new ExampleDataSource();
+  displayedColumns = ['enabled', 'edit', 'name', 'websites', 'delete'];
+  dataSource: CustomCodeDataSource | null;
+  customCodeDatabase = new CustomCodeDatabase();
+
+  fn_initialize() {
+    this.go++;
+    this.initialize();
+  }
+
+  initialize(){
+    if(this.go<2)
+    {
+      return;
+    }
+
+    if(!this.settings.autorun.customcodes || this.settings.autorun.customcodes.length==0)
+    {
+      this.settings.autorun.customcodes =
+      [
+        {id:'sample-1', name:'Hide all images on Yahoo', websites:'yahoo.com', script:'Array.from(document.getElementsByTagName("img")).forEach(function(x) {x.style.visibility="hidden"});\nwindow.addEventListener("scroll",function(e) {\n    Array.from(document.getElementsByTagName("img")).forEach(function(x) {x.style.visibility="hidden"});\n});\n', activated:false},
+      ];
+    }
+
+    for(var i=0;i<this.settings.autorun.customcodes.length;i++)
+    {
+      this.customCodeDatabase.add(this.settings.autorun.customcodes[i]);
+    }
+
+    this.dataSource = new CustomCodeDataSource(this.customCodeDatabase, this.sort);
+
+  }
+
+  fn_delete(element){
+
+    let index = this.settings.autorun.customcodes.indexOf(element);
+    if (index >= 0) {
+      this.settings.autorun.customcodes.splice(index, 1);
+      this.customCodeDatabase.remove(element);
+  	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+    }
+  }
+
+  fn_edit(element){
+
+  }
+
+  fn_change_activated(element)
+  {
+	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+  }
 }
 
-export interface Element {
+export interface CustomCodeElement {
+  id: string;
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  websites: string;
+  script: string;
+  activated:boolean;
 }
 
-const data: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-];
+export class CustomCodeDatabase {
+  /** Stream that emits whenever the data has been modified. */
+  dataChange: BehaviorSubject<CustomCodeElement[]> = new BehaviorSubject<CustomCodeElement[]>([]);
+  get data(): CustomCodeElement[] { return this.dataChange.value; }
 
-export class ExampleDataSource extends DataSource<any> {
-  connect(): Observable<Element[]> {
-    return Observable.of(data);
+  constructor() {}
+
+  /** Adds a new user to the database. */
+  add(element) {
+    const copiedData = this.data.slice();
+    copiedData.push(element);
+    this.dataChange.next(copiedData);
   }
-  disconnect() {}
+
+  remove(element) {
+    const copiedData = this.data.slice();
+    let index = copiedData.indexOf(element);
+    if(index>=0)
+    {
+      copiedData.splice(index, 1);
+      this.dataChange.next(copiedData);
+    }
+  }
+
 }
 
+/**
+ * Data source to provide what data should be rendered in the table. Note that the data source
+ * can retrieve its data in any way. In this case, the data source is provided a reference
+ * to a common data base, CustomCodeDatabase. It is not the data source's responsibility to manage
+ * the underlying data. Instead, it only needs to take the data and send the table exactly what
+ * should be rendered.
+ */
+export class CustomCodeDataSource extends DataSource<any> {
+  constructor(private _CustomCodeDatabase: CustomCodeDatabase, private _sort: MdSort) {
+    super();
+  }
 
+  /** Connect function called by the table to retrieve one stream containing the data to render. */
+  connect(): Observable<CustomCodeElement[]> {
+    const displayDataChanges = [
+      this._CustomCodeDatabase.dataChange,
+      this._sort.sortChange,
+    ];
+
+    return Observable.merge(...displayDataChanges).map(() => {
+      return this.getSortedData();
+    });
+  }
+
+  disconnect() {}
+
+  /** Returns a sorted copy of the database data. */
+  getSortedData(): CustomCodeElement[] {
+    const data = this._CustomCodeDatabase.data.slice();
+    if (!this._sort.active || this._sort.direction == '') { return data; }
+
+    return data.sort((a, b) => {
+      let propertyA: number|string = '';
+      let propertyB: number|string = '';
+
+      switch (this._sort.active) {
+        case 'activated': [propertyA, propertyB] = [a.activated?1:0, b.activated?1:0]; break;
+        case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
+        case 'websites': [propertyA, propertyB] = [a.websites, b.websites]; break;
+      }
+
+      let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+      return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
+    });
+  }
+}

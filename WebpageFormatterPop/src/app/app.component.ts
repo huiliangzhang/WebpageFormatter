@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 declare var chrome:any;
 
@@ -9,15 +9,18 @@ declare var chrome:any;
 })
 export class AppComponent {
 
-  constructor(private cdr: ChangeDetectorRef) {
-  }
+  @ViewChild('customecode') customecode;
 
-  settings={running:false};
-  public ngAfterViewInit(){
+  constructor(private cdr: ChangeDetectorRef) {
     chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
       this.settings = response;
       this.cdr.detectChanges();
+      this.customecode.fn_initialize();
     }.bind(this));
+  }
+
+  settings={running:false, clicktohide:{}};
+  public ngAfterViewInit(){
   }
 
   fn_change_running() {
