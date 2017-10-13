@@ -1,0 +1,40 @@
+.transfer {
+  width:100%;
+  height:250px;
+}
+
+.headerarea{
+  box-sizing: border-box;
+  width:100%;
+  text-align:right;
+  padding:5px 5px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.headerarea md-icon{
+  margin-left:5px;
+  cursor:pointer;
+  color:lightgray;
+}
+
+.edit{
+  width:100%;
+  height:213px;
+}
+
+.edit textarea{
+  width:100%;
+  box-sizing: border-box;
+  height:100%;
+  font-size: 125%;
+  border:dotted 1px lightgray;
+  padding:3px 3px;
+
+  wrap:off;
+  white-space: nowrap;
+
+}

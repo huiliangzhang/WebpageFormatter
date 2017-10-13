@@ -42,7 +42,7 @@ var getJSON = function(url, callback) {
     };
     xhr.send();
 };
-getJSON("http://www.swiftformatter.com/assets/webformatter.json", function(err, data){
+getJSON("https://www.swiftformatter.com/assets/webformatter.json", function(err, data){
     if(!err)
     {
       settings.favlinks.defaultlinks=data.defaultlinks;
@@ -73,7 +73,7 @@ chrome.runtime.onMessage.addListener(
 
     if(sender.id!=chrome.runtime.id)
     {
-        console.log(request, sender);
+        console.log('Wrong message', request, sender);
         return;
     }
 
@@ -94,6 +94,18 @@ chrome.runtime.onMessage.addListener(
 		changeIcon();
 		syncContentScript();
 	}
+	else if(request.messageType == 'notifyEditor')
+	{
+        chrome.tabs.query({currentWindow: true}, function(tabs) {
+          tabs.forEach(function(x){
+            if(x.url.indexOf('https://www.swiftformatter.com/autocode')==0)
+            {
+                chrome.tabs.sendMessage(x.id, {messageType:'notifyEditor', value:request.value});
+            }
+          });
+        });
+	}
+
 });
 
   var setSetting=function(keys, value) {

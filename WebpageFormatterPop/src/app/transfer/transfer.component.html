@@ -1,0 +1,21 @@
+<div class="transfer">
+  <div class="headerarea">
+    <div>
+      Settings JSON
+    </div>
+    <div>
+      <md-icon class="md-24 accenthover" aria-label="refresh" mdTooltip="Refresh the settings JSON" mdTooltipPosition="below" (click)="fn_refresh()">refresh</md-icon>
+      <md-icon class="md-24 accenthover" aria-label="clear" mdTooltip="Clear the following text area" mdTooltipPosition="below" (click)="fn_clear()">clear</md-icon>
+      <md-icon class="md-24 accenthover" aria-label="restore" mdTooltip="Load default settings JSON" mdTooltipPosition="below" (click)="fn_default()">restore</md-icon>
+      <md-icon class="md-24 accenthover" aria-label="content_copy" mdTooltip="Copy to memory clipboard" mdTooltipPosition="below" (click)="fn_copy()">content_copy</md-icon>
+      <md-icon class="md-24 accenthover" aria-label="save" mdTooltip="Save to local file" mdTooltipPosition="below" (click)="fn_save()">save</md-icon>
+      <md-icon class="md-24 accenthover" aria-label="settings" mdTooltip="Apply the settings JSON" mdTooltipPosition="below" (click)="fn_set()">settings</md-icon>
+    </div>
+
+  </div>
+
+  <div class="edit">
+    <textarea mdInput placeholder="Settings JSON" [(ngModel)]="settingsText"></textarea>
+  </div>
+
+</div>

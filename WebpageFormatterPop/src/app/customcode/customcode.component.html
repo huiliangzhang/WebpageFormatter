@@ -1,59 +1,62 @@
-<p>
-  Run your own JS code when web page is loaded.
-</p>
-<div >
+<div class="mainarea">
 
-  <md-table #table [dataSource]="dataSource" mdSort>
+  <p>
+    Run your own JS code when web page is loaded.
+  </p>
+  <div class="tablearea">
 
-    <ng-container mdColumnDef="enabled">
-      <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'customWidthClass_activated'">
-        Activated
-      </md-header-cell>
-      <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_activated customWidthClass_center'">
-        <md-checkbox [(ngModel)]="element.activated" (change)="fn_change_activated(element)"></md-checkbox>
-      </md-cell>
-    </ng-container>
+    <md-table #table [dataSource]="dataSource" mdSort>
 
-    <ng-container mdColumnDef="edit">
-      <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'">
-        <button md-icon-button mdTooltip="New" mdTooltipPosition="below"  >
-          <md-icon class="md-24 accenthover" (click)="fn_edit(null)" aria-label="add">add</md-icon>
-        </button>
-      </md-header-cell>
-      <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
-        <button md-icon-button mdTooltip="Edit" mdTooltipPosition="below"  >
-          <md-icon class="md-24 accenthover" (click)="fn_edit(element)" aria-label="mode_edit">mode_edit</md-icon>
-        </button>
-      </md-cell>
-    </ng-container>
+      <ng-container mdColumnDef="enabled">
+        <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'customWidthClass_activated'">
+          Activated
+        </md-header-cell>
+        <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_activated customWidthClass_center'">
+          <md-checkbox [(ngModel)]="element.activated" (change)="fn_change_activated(element)"></md-checkbox>
+        </md-cell>
+      </ng-container>
 
-    <ng-container mdColumnDef="name">
-      <md-header-cell *mdHeaderCellDef md-sort-header> Name </md-header-cell>
-      <md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
-    </ng-container>
+      <ng-container mdColumnDef="edit">
+        <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'">
+          <button md-icon-button mdTooltip="New" mdTooltipPosition="below"  >
+            <md-icon class="md-24 accenthover" (click)="fn_edit(null)" aria-label="add">add</md-icon>
+          </button>
+        </md-header-cell>
+        <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
+          <button md-icon-button mdTooltip="Edit" mdTooltipPosition="below"  >
+            <md-icon class="md-24 accenthover" (click)="fn_edit(element)" aria-label="mode_edit">mode_edit</md-icon>
+          </button>
+        </md-cell>
+      </ng-container>
 
-    <ng-container mdColumnDef="websites">
-      <md-header-cell *mdHeaderCellDef md-sort-header> Websites </md-header-cell>
-      <md-cell *mdCellDef="let element"> {{element.websites}} </md-cell>
-    </ng-container>
+      <ng-container mdColumnDef="name">
+        <md-header-cell *mdHeaderCellDef md-sort-header> Name </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
+      </ng-container>
 
-    <ng-container mdColumnDef="delete" >
-      <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'"></md-header-cell>
-      <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
-        <button md-icon-button [mdMenuTriggerFor]="menudelete" mdTooltip="Delete" mdTooltipPosition="below"  >
-          <md-icon class="md-24 accenthover" aria-label="delete">remove_circle</md-icon>
-        </button>
-        <md-menu #menudelete="mdMenu">
-          <button md-menu-item disabled>Delete "{{element.name}}"?</button>
-          <button md-menu-item (click)="fn_delete(element)">Yes</button>
-          <button md-menu-item>Cancel</button>
-        </md-menu>
-      </md-cell>
-    </ng-container>
+      <ng-container mdColumnDef="websites">
+        <md-header-cell *mdHeaderCellDef md-sort-header> Websites </md-header-cell>
+        <md-cell *mdCellDef="let element"> {{element.websites}} </md-cell>
+      </ng-container>
 
-    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-  </md-table>
+      <ng-container mdColumnDef="delete" >
+        <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'"></md-header-cell>
+        <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
+          <button md-icon-button [mdMenuTriggerFor]="menudelete" mdTooltip="Delete" mdTooltipPosition="below"  >
+            <md-icon class="md-24 accenthover" aria-label="delete">remove_circle</md-icon>
+          </button>
+          <md-menu #menudelete="mdMenu">
+            <button md-menu-item disabled>Delete "{{element.name}}"?</button>
+            <button md-menu-item (click)="fn_delete(element)">Yes</button>
+            <button md-menu-item>Cancel</button>
+          </md-menu>
+        </md-cell>
+      </ng-container>
+
+      <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+      <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
 
 
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import {
+  MatSnackBarModule,
   MatButtonModule,
   MdSortModule,
   MatCheckboxModule,
@@ -19,6 +20,7 @@ import {
 
 @NgModule({
   imports: [
+    MatSnackBarModule,
     MatButtonModule,
     MdSortModule,
     MatCheckboxModule,
@@ -35,6 +37,7 @@ import {
     MatInputModule
   ],
   exports: [
+    MatSnackBarModule,
     MatButtonModule,
     MdSortModule,
     MatCheckboxModule,

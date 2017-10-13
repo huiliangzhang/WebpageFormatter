@@ -1,11 +1,11 @@
 <div>
 
 
-  <div style="max-height:230px; overflow:auto">
+  <div class="mainarea">
 
-    <div style="margin-top:10px">
+    <div class="favlinkarea">
       <md-chip-list>
-        <md-chip *ngFor="let dlink of settings.favlinks?.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" style="cursor:pointer" (click)="fn_open(dlink, false)">
+        <md-chip *ngFor="let dlink of settings.favlinks?.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" (click)="fn_open(dlink, false)">
           {{dlink.title}}
         </md-chip>
 
@@ -17,12 +17,12 @@
     </div>
 
     <form>
-      <table *ngIf="editmode" style="width:100%; margin-top:5px; margin-bottom:10px;" cellspacing="0"><tr>
-        <td ><md-form-field style="width:130px">
+      <table *ngIf="editmode" class="editarea" cellspacing="0"><tr>
+        <td ><md-form-field class="namearea">
           <input name="toolslist_name" mdInput #message_name maxlength="20" placeholder="Name" [(ngModel)]="newlink.title">
           <md-hint align="end">{{message_name.value.length}} / 20</md-hint>
         </md-form-field></td>
-        <td><md-form-field style="width:320px">
+        <td><md-form-field class="urlarea">
           <input name="toolslist_value" mdInput placeholder="Website URL" [(ngModel)]="newlink.value" >
         </md-form-field></td>
         <td>
@@ -38,7 +38,7 @@
       <md-chip-list mdPrefix #chipList>
         <md-chip *ngFor="let dlink of settings.favlinks?.customlinks" [selectable]="selectable"
                  (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)"
-                 style="cursor:pointer" (click)="fn_open(dlink, true)"
+                 (click)="fn_open(dlink, true)"
                  [removable]="removable" (remove)="remove(dlink)" >
           <span [ngClass]="{'accentcolor': editing==dlink}">{{dlink.title}}</span>
           <md-icon class="accenthover" *ngIf="editmode" mdChipRemove>cancel</md-icon>
@@ -48,7 +48,7 @@
 
   </div>
 
-  <div style="height:20px; display: table-cell; vertical-align: bottom;">
+  <div class="hintarea">
     {{hovering.value}}
   </div>
 

@@ -1,11 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="width:500px; ">
+<div class="main">
 
-  <div style="position:relative;text-align:center;">
+  <div class="labeldiv">
     <h3>
       Webpage formatter
     </h3>
-    <div style="position:absolute; right:10px; top:10px;">
+    <div class="statusarea">
       <md-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
         <span *ngIf="settings.running">ON</span>
         <span *ngIf="!settings.running">OFF</span>
@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <md-tab-group style="height:300px" selectedIndex="2">
+  <md-tab-group class="tabarea" (selectChange)="fn_selectedTabChange($event)">
     <md-tab label="Online tools">
       <app-toolslist [(settings)]="settings"></app-toolslist>
     </md-tab>
@@ -21,12 +21,15 @@
       <app-clicktotrigger [(settings)]="settings"></app-clicktotrigger>
     </md-tab>
     <md-tab label="Auto run">
-      <app-customcode #customecode [(settings)]="settings"></app-customcode>
+      <app-customcode #customcode ></app-customcode>
+    </md-tab>
+    <md-tab label="Settings" >
+      <app-transfer #transfer ></app-transfer>
     </md-tab>
   </md-tab-group>
 
-  <div style="text-align:right; margin-top:20px">
-    <a href="http://www.swiftformatter.com" target="_blank">swiftformatter.com</a>
+  <div class="bottom">
+    <a href="https://www.swiftformatter.com" target="_blank">swiftformatter.com</a>
   </div>
 
 

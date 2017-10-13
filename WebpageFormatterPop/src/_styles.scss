@@ -1,14 +1,15 @@
 @import '~@angular/material/theming';
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 $app-primary: mat-palette($mat-indigo);
 $app-accent:  mat-palette($mat-pink, A200, A100, A400);
+
 $app-theme: mat-light-theme($app-primary, $app-accent);
 .accentcolor{
     color: mat-color($app-accent);
 }
 
 .accenthover:hover{
-    color: mat-color($app-accent);
+    color: mat-color($app-accent) !important;
 }
 

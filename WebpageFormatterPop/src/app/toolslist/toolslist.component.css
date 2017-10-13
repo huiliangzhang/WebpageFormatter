@@ -1,0 +1,32 @@
+
+.mainarea{
+  max-height:230px;
+  overflow:auto;
+}
+
+.favlinkarea{
+  margin-top:10px;
+}
+
+.mainarea md-chip{
+  cursor:pointer;
+}
+
+.editarea{
+  width:100%;
+  margin-top:5px;
+  margin-bottom:10px;
+}
+
+.editarea .namearea{
+  width:130px
+}
+.editarea .urlarea{
+  width:320px
+}
+
+.hintarea{
+  height:20px;
+  display: table-cell;
+  vertical-align: bottom;
+}

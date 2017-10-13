@@ -1,0 +1,23 @@
+.main{
+  width:500px;
+}
+
+.labeldiv{
+  position:relative;
+  text-align:center;
+}
+
+.statusarea{
+  position:absolute;
+  right:10px;
+  top:10px;
+}
+
+.tabarea{
+  height:300px
+}
+
+.bottom{
+  text-align:right;
+  margin-top:20px
+}

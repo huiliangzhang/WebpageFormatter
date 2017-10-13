@@ -43,7 +43,7 @@ var func_document_click = function(e){
 		return;
 	}
 	e.preventDefault();
-	e.stopPropagation();
+	e.stopImmediatePropagation();
 	
 	var now=new Date().getTime();
 	if(now - last_click <= 500)
@@ -153,17 +153,97 @@ chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+	if(sender.id!=chrome.runtime.id)
+	{
+		console.log('Invalid message', request, sender);
+		return;
+	}
 	if(request.messageType == 'updateSettings')
 	{
 		settings = request.value;
 		syncSettings();
 	}
+	else if(request.messageType == 'notifyEditor')
+	{
+		document.dispatchEvent(new CustomEvent(request.value.event, request.value.attached));
+	}
   }
 );
 
-document.addEventListener("hello", function(data) {
+internal_is_certified_editor=function(event){
+	var baseURI = event.srcElement.baseURI;
+//	if(baseURI=='http://localhost:4200/')
+//		return true;
 
-	console.log(data);
-    //chrome.runtime.sendMessage("test");
+	if(baseURI=='https://www.swiftformatter.com/')
+	{
+		return true;
+	}
+	return false;
+}
+
+document.addEventListener("sf_get_autocode", function(event) {
+	if(internal_is_certified_editor(event))
+	{
+		if(settings)
+		{
+			event.srcElement.dispatchEvent(new CustomEvent('sf_send_autocode_from_extension', {detail: settings.autorun.customcodes}));
+		}
+	}
 });
+
+document.addEventListener("sf_send_autocode_from_editor", function(event) {
+	if(internal_is_certified_editor(event))
+	{
+		var autocode=event.detail;
+		if(autocode)
+		{
+			var p;
+			for(var i=0; i<settings.autorun.customcodes.length; i++)
+			{
+				if(settings.autorun.customcodes[i].id==autocode.id)
+				{
+					p=settings.autorun.customcodes[i];
+				}
+			}
+			if(!p)
+			{
+				p={id:autocode.id, activated:true};
+				settings.autorun.customcodes.push(p);
+			}
+			event.srcElement.dispatchEvent(new CustomEvent('sf_send_autocode_saved_from_extension'));
+
+			p.name=autocode.name;
+			p.websites=autocode.websites;
+			p.script=autocode.script;
+			p.activated=autocode.activated;
+
+			settings.autorun.customcodes.sort(function(a,b){return a.name>b.name});
+
+		    chrome.runtime.sendMessage({messageType: "saveSettings", value:settings});
+
+		}
+	}
+});
+
+document.addEventListener("sf_delete_autocode_from_editor", function(event) {
+	if(internal_is_certified_editor(event))
+	{
+		var autocode=event.detail;
+		if(autocode)
+		{
+			for(var i=0; i<settings.autorun.customcodes.length; i++)
+			{
+				if(settings.autorun.customcodes[i].id==autocode.id)
+				{
+					settings.autorun.customcodes.splice(i, 1);
+					break;
+				}
+			}
+		    chrome.runtime.sendMessage({messageType: "saveSettings", value:settings});
+		}
+	}
+});
+
+
 

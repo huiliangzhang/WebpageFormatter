@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 declare var chrome:any;
 
 import {DataSource} from '@angular/cdk/collections';
@@ -17,34 +17,19 @@ import 'rxjs/add/operator/map';
 })
 export class CustomcodeComponent implements OnInit {
 
-  @Input() settings: any;
+  settings;
 
   @ViewChild(MdSort) sort: MdSort;
 
-  constructor() { }
-
-  go=0;
-  ngOnInit() {
-    this.go++;
-    this.initialize();
-    console.log(this.sort);
-  }
+  constructor() {}
+  ngOnInit() {}
 
   displayedColumns = ['enabled', 'edit', 'name', 'websites', 'delete'];
   dataSource: CustomCodeDataSource | null;
   customCodeDatabase = new CustomCodeDatabase();
 
-  fn_initialize() {
-    this.go++;
-    this.initialize();
-  }
-
-  initialize(){
-    if(this.go<2)
-    {
-      return;
-    }
-
+  fn_initialize(settings) {
+    this.settings=settings;
     if(!this.settings.autorun.customcodes || this.settings.autorun.customcodes.length==0)
     {
       this.settings.autorun.customcodes =
@@ -53,6 +38,7 @@ export class CustomcodeComponent implements OnInit {
       ];
     }
 
+    this.customCodeDatabase.clear();
     for(var i=0;i<this.settings.autorun.customcodes.length;i++)
     {
       this.customCodeDatabase.add(this.settings.autorun.customcodes[i]);
@@ -69,16 +55,19 @@ export class CustomcodeComponent implements OnInit {
       this.settings.autorun.customcodes.splice(index, 1);
       this.customCodeDatabase.remove(element);
   	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+
+	    chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_delete_autocode_from_extension', attached:{detail:element}}});
     }
   }
 
   fn_edit(element){
-
+      window.open('https://www.swiftformatter.com/autocode'+(element?'?id='+element.id:''), '_blank');
   }
 
   fn_change_activated(element)
   {
 	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+	  chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_update_autocode_from_extension', attached:{detail:element}}});
   }
 }
 
@@ -97,7 +86,6 @@ export class CustomCodeDatabase {
 
   constructor() {}
 
-  /** Adds a new user to the database. */
   add(element) {
     const copiedData = this.data.slice();
     copiedData.push(element);
@@ -112,6 +100,12 @@ export class CustomCodeDatabase {
       copiedData.splice(index, 1);
       this.dataChange.next(copiedData);
     }
+  }
+
+  clear() {
+    const copiedData = this.data.slice();
+    copiedData.length=0;
+    this.dataChange.next(copiedData);
   }
 
 }

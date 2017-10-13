@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { ClicktotriggerComponent } from './clicktotrigger/clicktotrigger.component';
 import { CustomcodeComponent } from './customcode/customcode.component';
 import { ToolslistComponent } from './toolslist/toolslist.component';
+import { TransferComponent } from './transfer/transfer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClicktotriggerComponent,
     CustomcodeComponent,
-    ToolslistComponent
+    ToolslistComponent,
+    TransferComponent
   ],
   imports: [
     BrowserModule,

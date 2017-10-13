@@ -1,9 +1,19 @@
-.example-container {
-  display: flex;
-  flex-direction: column;
-  max-height: 500px;
-  min-width: 300px;
+
+.mainarea{
+  height:239px;
+  position:relative;
 }
+
+.tablearea{
+  position:absolute;
+  left:0;
+  right:0;
+  top:20px;
+  bottom:5px;
+  overflow:auto
+}
+
+
 
 .mat-table {
   overflow: auto;
