@@ -2,3 +2,5 @@
 .DS_Store
 WebpageFormatter.iml
 WebpageFormatterPop/node_modules
+*.zip
+
