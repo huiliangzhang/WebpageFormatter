@@ -13,8 +13,6 @@
   overflow:auto
 }
 
-
-
 .mat-table {
   overflow: auto;
   max-height: 500px;
@@ -35,3 +33,20 @@
 ::ng-deep .mat-sort-header-container {
   justify-content:center
 }
+
+.title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.title .facebook{
+   width:20px;
+}
+
+.title .imagearea{
+   margin-left:5px;
+}
+
+

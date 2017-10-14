@@ -19,5 +19,17 @@
 
 .bottom{
   text-align:right;
-  margin-top:20px
+  margin-top:20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bottom a {
+  margin-left:10px;
+}
+
+.facebook{
+  width:20px;
 }
