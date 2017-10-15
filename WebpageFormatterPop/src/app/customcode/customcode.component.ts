@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 declare var chrome:any;
 
 import {DataSource} from '@angular/cdk/collections';
@@ -17,7 +17,7 @@ import 'rxjs/add/operator/map';
 })
 export class CustomcodeComponent implements OnInit {
 
-  settings;
+  @Input() settings: any;
 
   @ViewChild(MdSort) sort: MdSort;
 
@@ -69,6 +69,12 @@ export class CustomcodeComponent implements OnInit {
 	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
 	  chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_update_autocode_from_extension', attached:{detail:element}}});
   }
+
+  fn_change_running() {
+    this.settings.autorun.running=!this.settings.autorun.running;
+    chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+  }
+
 }
 
 export interface CustomCodeElement {

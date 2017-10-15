@@ -1,5 +1,24 @@
 <div class="mainarea">
 
+  <div class="statusarea">
+    <div class="title">
+      <div>
+        Run your own JS code when web page is loaded. Share your Auto Run code on
+      </div>
+      <div class="imagearea">
+        <a target="_blank" href="https://www.facebook.com/swiftformatter">
+          <img class="facebook" src="../FB-fLogo-Blue-broadcast-2.png">
+        </a>.
+      </div>
+    </div>
+    <div>
+      <md-slide-toggle [checked]="settings.autorun.running" (change)="fn_change_running()">
+        <span *ngIf="settings.autorun.running">ON</span>
+        <span *ngIf="!settings.autorun.running">OFF</span>
+      </md-slide-toggle>
+    </div>
+  </div>
+
   <div class="title">
     <div>
       Run your own JS code when web page is loaded. Share your Auto Run code on

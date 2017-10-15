@@ -266,16 +266,9 @@ ClickToHide.prototype = {
     }
 }
 
-var settings;
-var imagehoving= new ImageHoving();
-var clicktohide= new ClickToHide();
-
-var syncSettings = function() {
-
-	imagehoving.init(settings);
-	clicktohide.init(settings);
-
-	if(settings.running)
+//autorun code
+var autorun=function(){
+	if(settings.running && settings.autorun.running)
 	{
 		//initial running
 		var currentUrl=document.location.href;
@@ -305,9 +298,16 @@ var syncSettings = function() {
         		}
          	}
         });
-
 	}
+}
 
+var settings;
+var imagehoving= new ImageHoving();
+var clicktohide= new ClickToHide();
+var syncSettings = function() {
+	imagehoving.init(settings);
+	clicktohide.init(settings);
+	autorun();
 }
 
 chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {

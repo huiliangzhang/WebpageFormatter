@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {}
 
-  settings={running:false, clicktohide:{}, imagehoving:{}};
+  settings={running:false, clicktohide:{}, imagehoving:{}, autorun:{}};
   public ngAfterViewInit(){
   }
 
