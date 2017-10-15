@@ -1,11 +1,24 @@
-<form>
-  <p>
-    <md-select placeholder="Activation Key" name="clicktotrigger_activationKey" [(ngModel)]="settings.clicktohide.activationKey" (change)="fn_change()">
+<div>
+
+  <div class="statusarea">
+    <div>
+      See original image in popoup and resize!
+    </div>
+    <div>
+      <md-slide-toggle [checked]="settings.clicktohide.running" (change)="fn_change_running()">
+        <span *ngIf="settings.clicktohide.running">ON</span>
+        <span *ngIf="!settings.clicktohide.running">OFF</span>
+      </md-slide-toggle>
+    </div>
+  </div>
+
+  <div>
+    <md-select placeholder="Activation Key" [(ngModel)]="settings.clicktohide.activationKey" (change)="fn_change()">
       <md-option *ngFor="let key of keys" [value]="key.value">
         {{ key.title }}
       </md-option>
     </md-select>
-  </p>
+  </div>
   <div class="hintarea">
     <p>
       Hold the Activation Key and single click to hide the selected area.
@@ -19,4 +32,4 @@
     <input mdInput name="clicktotrigger_titleName" placeholder="Replace webpage title with" [(ngModel)]="settings.clicktohide.titleName" (change)="fn_change()">
   </md-form-field>
 
-</form>
+</div>

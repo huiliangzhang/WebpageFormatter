@@ -3,11 +3,11 @@ import { Component, OnInit, Input } from '@angular/core';
 declare var chrome:any;
 
 @Component({
-  selector: 'app-clicktotrigger',
-  templateUrl: './clicktotrigger.component.html',
-  styleUrls: ['./clicktotrigger.component.css']
+  selector: 'app-imagehoving',
+  templateUrl: './imagehoving.component.html',
+  styleUrls: ['./imagehoving.component.css']
 })
-export class ClicktotriggerComponent implements OnInit {
+export class ImagehovingComponent implements OnInit {
 
   @Input() settings: any;
 
@@ -29,7 +29,7 @@ export class ClicktotriggerComponent implements OnInit {
   }
 
   fn_change_running() {
-    this.settings.clicktohide.running=!this.settings.clicktohide.running;
+    this.settings.imagehoving.running=!this.settings.imagehoving.running;
 	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
   }
 

@@ -5,7 +5,7 @@
     <h3>
       Webpage formatter
     </h3>
-    <div class="statusarea">
+    <div class="mainstatusarea">
       <md-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
         <span *ngIf="settings.running">ON</span>
         <span *ngIf="!settings.running">OFF</span>
@@ -14,10 +14,13 @@
   </div>
 
   <md-tab-group class="tabarea" (selectChange)="fn_selectedTabChange($event)">
-    <md-tab label="Online tools">
+    <md-tab label="Tools">
       <app-toolslist [(settings)]="settings"></app-toolslist>
     </md-tab>
-    <md-tab label="Click to hide">
+    <md-tab label="Image">
+      <app-imagehoving [(settings)]="settings"></app-imagehoving>
+    </md-tab>
+    <md-tab label="Hide">
       <app-clicktotrigger [(settings)]="settings"></app-clicktotrigger>
     </md-tab>
     <md-tab label="Auto run">

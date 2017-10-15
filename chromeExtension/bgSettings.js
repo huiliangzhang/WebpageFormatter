@@ -11,19 +11,29 @@ settings = JSON.parse(localStorage.getItem('settings'));
 if(!settings)
 {
   settings = {running: true};
-
-  settings.clicktohide={};
+}
+if(!settings.imagehoving)
+{
+  settings.imagehoving={running: true};
+  settings.imagehoving.activationKey='alt';
+}
+if(!settings.clicktohide)
+{
+  settings.clicktohide={running: true};
   settings.clicktohide.activationKey='alt';
-
+}
+if(!settings.favlinks)
+{
   settings.favlinks={};
   settings.favlinks.customlinks=[
     {title:'Facebook', value:'https://www.facebook.com'},
     {title:'Google', value:'https://www.google.com'},
     {title:'Yahoo', value:'https://www.yahoo.com'}
   ];
-
-  settings.autorun={};
-
+}
+if(!settings.autorun)
+{
+  settings.autorun={running: true};
 }
 settings.isMacLike=navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i)?true:false;
 syncContentScript();
@@ -108,7 +118,7 @@ chrome.runtime.onMessage.addListener(
 
 });
 
-  var setSetting=function(keys, value) {
+var setSetting=function(keys, value) {
 
     if(!keys)
     {
@@ -129,7 +139,7 @@ chrome.runtime.onMessage.addListener(
     container[ss[i]] = value;
     localStorage.setItem('settings', JSON.stringify(settings));
 
-  }
+}
 
 
 

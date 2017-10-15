@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './routing.module';
+//import { AppRoutingModule } from './routing.module';
 import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { ClicktotriggerComponent } from './clicktotrigger/clicktotrigger.compone
 import { CustomcodeComponent } from './customcode/customcode.component';
 import { ToolslistComponent } from './toolslist/toolslist.component';
 import { TransferComponent } from './transfer/transfer.component';
+import { ImagehovingComponent } from './imagehoving/imagehoving.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,13 @@ import { TransferComponent } from './transfer/transfer.component';
     ClicktotriggerComponent,
     CustomcodeComponent,
     ToolslistComponent,
-    TransferComponent
+    TransferComponent,
+    ImagehovingComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+//    AppRoutingModule,
     MaterialModule,
     FormsModule
   ],

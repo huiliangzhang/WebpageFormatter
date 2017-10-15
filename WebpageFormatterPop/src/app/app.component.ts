@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {}
 
-  settings={running:false, clicktohide:{}};
+  settings={running:false, clicktohide:{}, imagehoving:{}};
   public ngAfterViewInit(){
   }
 
@@ -31,11 +31,11 @@ export class AppComponent implements OnInit {
   }
 
   fn_selectedTabChange(e:any) {
-    if(e.index==2)
+    if(e.index==3)
     {
         this.customcode.fn_initialize(this.settings);
     }
-    else if(e.index==3)
+    else if(e.index==4)
     {
       this.transfer.fn_initialize(this.settings);
     }
