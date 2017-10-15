@@ -21,7 +21,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["main.css"],
-      "js": ["main.js"]
+      "js": ["main.js", "addons/imagehoving.js", "addons/clicktohide.js"]
     }
   ],
   "web_accessible_resources": [
