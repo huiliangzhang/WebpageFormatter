@@ -19,17 +19,29 @@
 
 .bottom{
   text-align:right;
-  margin-top:20px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .bottom a {
-  margin-left:10px;
+  margin-left:5px;
 }
 
-.facebook{
-  width:20px;
+.bottom .centerdiv{
+  margin-top:10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+.bottom .facebook{
+   width:20px;
+}
+
+.bottom .imagearea{
+   margin-right:10px;
+}
+
+

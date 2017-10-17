@@ -9,13 +9,13 @@
   left:0;
   right:0;
   top:20px;
-  bottom:5px;
+  bottom:0px;
   overflow:auto
 }
 
 .mat-table {
   overflow: auto;
-  max-height: 500px;
+  max-height: 505px;
 }
 
 .mat-header-row, .mat-row {
@@ -40,13 +40,4 @@
   align-items: center;
 
 }
-
-.title .facebook{
-   width:20px;
-}
-
-.title .imagearea{
-   margin-left:5px;
-}
-
 

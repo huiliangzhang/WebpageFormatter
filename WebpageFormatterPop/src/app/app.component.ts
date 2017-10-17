@@ -30,9 +30,12 @@ export class AppComponent implements OnInit {
 	  chrome.runtime.sendMessage({messageType: "setSettings", type:"running", value:this.settings.running});
   }
 
+  selectedTab;
   fn_selectedTabChange(e:any) {
+    this.selectedTab='';
     if(e.index==3)
     {
+        this.selectedTab='customcode';
         this.customcode.fn_initialize(this.settings);
     }
     else if(e.index==4)
