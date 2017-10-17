@@ -24,7 +24,7 @@ export class CustomcodeComponent implements OnInit {
   constructor() {}
   ngOnInit() {}
 
-  displayedColumns = ['enabled', 'edit', 'name', 'websites', 'delete'];
+  displayedColumns = ['activated', 'edit', 'name', 'websites', 'delete'];
   dataSource: CustomCodeDataSource | null;
   customCodeDatabase = new CustomCodeDatabase();
 
@@ -152,7 +152,7 @@ export class CustomCodeDataSource extends DataSource<any> {
       let propertyB: number|string = '';
 
       switch (this._sort.active) {
-        case 'activated': [propertyA, propertyB] = [a.activated?1:0, b.activated?1:0]; break;
+        case 'activated': [propertyA, propertyB] = [a.activated==true?2:1, b.activated==true?2:1]; break;
         case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
         case 'websites': [propertyA, propertyB] = [a.websites, b.websites]; break;
       }
