@@ -132,13 +132,25 @@ ImageHoving.prototype = {
     init: function(settings) {
 		this.setting=settings.imagehoving;
 
-		document.removeEventListener('mousemove', this.func_mousemove.bind(this));
-		document.removeEventListener('mousewheel', this.func_mousewheel.bind(this));
         if(settings.running && this.setting.running)
         {
-            document.addEventListener('mousemove', this.func_mousemove.bind(this));
-            document.addEventListener('mousewheel', this.func_mousewheel.bind(this));
+			if(!this.eventHandles)
+			{
+				this.eventHandles={mousemove:this.func_mousemove.bind(this), mousewheel:this.func_mousewheel.bind(this)};
+				document.addEventListener('mousemove', this.eventHandles.mousemove);
+				document.addEventListener('mousewheel', this.eventHandles.mousewheel);
+			}
         }
+        else
+        {
+            if(this.eventHandles)
+            {
+                document.removeEventListener('mousemove', this.eventHandles.mousemove);
+                document.removeEventListener('mousewheel', this.eventHandles.mousewheel);
+                this.eventHandles=null;
+            }
+        }
+
     }
 }
 

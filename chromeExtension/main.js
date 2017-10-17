@@ -1,11 +1,13 @@
 var settings;
 var addons=[];
+var autoRuns=[];
+var autoRunsArray=[];
 var syncSettings = function() {
 	for(var i=0; i<addons.length; i++)
 	{
 		addons[i].init(settings);
 	}
-	autorun();
+	prepareAutoRun();
 }
 
 chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
@@ -35,7 +37,7 @@ chrome.runtime.onMessage.addListener(
 internal_is_certified_editor=function(event){
 	var baseURI = event.srcElement.baseURI;
 
-	if(baseURI=='https://www.swiftformatter.com/')
+	if(baseURI=='https://www.swiftformatter.com/' || baseURI=='http://localhost:4200/')
 	{
 		return true;
 	}
@@ -123,12 +125,40 @@ var isActivated = function(e) {
 }
 
 //autorun code
-var autorun=function(){
+var prepareAutoRun=function(){
 	if(settings.running && settings.autorun.running)
 	{
+		//deactivate removed autorun
+		for(var i=0; i<autoRunsArray.length; i++)
+		{
+			var existing=false;
+
+			for(var j=0; j<settings.autorun.customcodes.length; j++)
+			{
+				if(settings.autorun.customcodes[j].id == autoRunsArray[i].id)
+				{
+					existing=true;
+					break;
+				}
+			}
+			if(!existing)
+			{
+				internal_deactivate(autoRunsArray[i]);
+			}
+		}
+
 		//initial running
 		var currentUrl=document.location.href;
         settings.autorun.customcodes.forEach(function(x){
+        	var autoRun;
+			for(var i=0; i<autoRunsArray.length; i++)
+			{
+				if(autoRunsArray[i].id==x.id)
+				{
+					autoRun=autoRunsArray[i].autoRun;
+					break;
+				}
+			}
         	if(x.activated)
         	{
         		var websites = x.websites.split(/\s|;|,/);
@@ -146,15 +176,44 @@ var autorun=function(){
         		if(matching)
         		{
         			try{
-	        			eval(x.script);
+        				if(!autoRun)
+        				{
+							autoRuns.length=0;
+		        			eval('{'+x.script+'}');
+							if(autoRuns.length>0)
+							{
+		        				var p={id:x.id, autoRun:autoRuns[0]};
+		        				autoRunsArray.push(p);
+		        				autoRun=p.autoRun;
+							}
+        				}
+
+        				autoRun && autoRun.activate && autoRun.activate(x.setting);
         			}
         			catch(e) {
         				console.log(e);
         			}
         		}
+        		else
+        		{
+        			internal_deactivate(autoRun);
+        		}
+         	}
+         	else
+         	{
+         		internal_deactivate(autoRun);
          	}
         });
 	}
+	else
+	{
+		for(var i=0; i<autoRunsArray.length; i++)
+		{
+			internal_deactivate(autoRunsArray[i]);
+		}
+	}
 }
 
-
+var internal_deactivate=function(autoRun){
+	autoRun && autoRun.deactivate && autoRun.deactivate();
+}

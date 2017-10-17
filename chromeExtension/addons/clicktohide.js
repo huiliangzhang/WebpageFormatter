@@ -100,12 +100,23 @@ ClickToHide.prototype = {
     init: function(settings) {
 		this.setting=settings.clicktohide;
 
-		document.removeEventListener('mousemove', this.func_mousemove.bind(this));
-		document.removeEventListener('click', this.func_document_click.bind(this));
         if(settings.running && this.setting.running)
         {
-            document.addEventListener('mousemove', this.func_mousemove.bind(this));
-            document.addEventListener('click', this.func_document_click.bind(this));
+			if(!this.eventHandles)
+			{
+				this.eventHandles={mousemove:this.func_mousemove.bind(this), click:this.func_document_click.bind(this)};
+				document.addEventListener('mousemove', this.eventHandles.mousemove);
+				document.addEventListener('click', this.eventHandles.click);
+			}
+        }
+        else
+        {
+        	if(this.eventHandles)
+        	{
+				document.removeEventListener('mousemove', this.eventHandles.mousemove);
+				document.removeEventListener('click', this.eventHandles.click);
+				this.eventHandles=null;
+        	}
         }
     }
 }
