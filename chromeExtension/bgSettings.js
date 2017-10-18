@@ -108,7 +108,11 @@ chrome.runtime.onMessage.addListener(
 	{
         chrome.tabs.query({currentWindow: true}, function(tabs) {
           tabs.forEach(function(x){
-            if(x.url.indexOf('https://www.swiftformatter.com/autocode')==0 || x.url.indexOf('http://localhost:4200/autocode')==0)
+            if(x.url.indexOf('https://www.swiftformatter.com/autocode')==0
+                || x.url.indexOf('https://www.swiftformatter.com/webpage')==0
+                || x.url.indexOf('http://localhost:4200/autocode')==0
+                || x.url.indexOf('http://localhost:4200/webpage')==0
+                )
             {
                 chrome.tabs.sendMessage(x.id, {messageType:'notifyEditor', value:request.value});
             }

@@ -49,7 +49,7 @@ document.addEventListener("sf_get_autocode", function(event) {
 	{
 		if(settings)
 		{
-			event.srcElement.dispatchEvent(new CustomEvent('sf_send_autocode_from_extension', {detail: settings.autorun.customcodes}));
+			document.dispatchEvent(new CustomEvent('sf_send_autocode_from_extension', {detail: settings.autorun.customcodes}));
 		}
 	}
 });
@@ -73,12 +73,16 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 				p={id:autocode.id, activated:true};
 				settings.autorun.customcodes.push(p);
 			}
-			event.srcElement.dispatchEvent(new CustomEvent('sf_send_autocode_saved_from_extension'));
 
 			p.name=autocode.name;
 			p.websites=autocode.websites;
 			p.script=autocode.script;
 			p.activated=autocode.activated;
+			if(autocode.version)
+				p.version=autocode.version;
+			p.setting=autocode.setting;
+
+	    	chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_send_autocode_saved_from_extension', attached:{detail:p}}});
 
 			settings.autorun.customcodes.sort(function(a,b){return a.name>b.name});
 
@@ -102,6 +106,7 @@ document.addEventListener("sf_delete_autocode_from_editor", function(event) {
 					break;
 				}
 			}
+	    	chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_delete_autocode_from_extension', attached:{detail:{id:autocode.id}}}});
 		    chrome.runtime.sendMessage({messageType: "saveSettings", value:settings});
 		}
 	}
