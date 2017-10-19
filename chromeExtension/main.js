@@ -81,6 +81,7 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 			if(autocode.version)
 				p.version=autocode.version;
 			p.setting=autocode.setting;
+			p.settingText=autocode.settingText;
 
 	    	chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_send_autocode_saved_from_extension', attached:{detail:p}}});
 

@@ -60,8 +60,8 @@ export class CustomcodeComponent implements OnInit {
     }
   }
 
-  fn_edit(element){
-      window.open('https://www.swiftformatter.com/autocode'+(element?'?id='+element.id:''), '_blank');
+  fn_edit(element, mode){
+      window.open('https://www.swiftformatter.com/autocode'+(element?'?id='+element.id:'')+(mode?'&focus='+mode:''), '_blank');
   }
 
   fn_change_activated(element)

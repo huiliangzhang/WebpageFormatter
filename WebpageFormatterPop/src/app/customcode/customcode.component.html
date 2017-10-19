@@ -30,12 +30,15 @@
       <ng-container mdColumnDef="edit">
         <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'">
           <button md-icon-button mdTooltip="New" mdTooltipPosition="below"  >
-            <md-icon class="md-24 accenthover" (click)="fn_edit(null)" aria-label="add">add</md-icon>
+            <md-icon class="md-24 accenthover" (click)="fn_edit(null, null)" aria-label="add">add</md-icon>
           </button>
         </md-header-cell>
         <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
           <button md-icon-button mdTooltip="Edit" mdTooltipPosition="below"  >
-            <md-icon class="md-24 accenthover" (click)="fn_edit(element)" aria-label="mode_edit">mode_edit</md-icon>
+            <md-icon class="md-24 accenthover" (click)="fn_edit(element, 'script')" aria-label="mode_edit">mode_edit</md-icon>
+          </button>
+          <button md-icon-button mdTooltip="Change setting" mdTooltipPosition="below" *ngIf="element.setting" >
+            <md-icon class="md-24 accenthover" (click)="fn_edit(element, 'setting')" aria-label="setting">settings</md-icon>
           </button>
         </md-cell>
       </ng-container>
