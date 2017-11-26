@@ -1,0 +1,31 @@
+<div class="parameterrenderbox">
+  <div>
+    <div *ngIf="data.renderas!='checkbox'">
+      {{data.title}}
+      <span *ngIf="data.describe" class="small-mat-icon">
+        <mat-icon matTooltip="{{data.describe}}" class="cursordefault" aria-label="help">help</mat-icon>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="data.renderas=='input'">
+    <mat-form-field >
+      <input *ngIf="data.type=='string'" matInput [(ngModel)]="data.value">
+      <input *ngIf="data.type=='number'" type="number" matInput [(ngModel)]="data.value">
+    </mat-form-field>
+  </div>
+  <div *ngIf="data.renderas=='select'" class="verticalPadding">
+    <mat-select [(ngModel)]="data.value" >
+      <mat-option *ngFor="let option of data.options" [value]="option.value" matTooltip="{{option.describe}}">
+        {{ option.title }}
+      </mat-option>
+    </mat-select>
+  </div>
+  <div *ngIf="data.renderas=='radio'" class="verticalPadding">
+    <mat-radio-group >
+      <mat-radio-button *ngFor="let option of data.options" matTooltip="{{option.describe}}" [checked]="data.value==option.value" (click)="data.value=option.value" value="{{option.value}}">{{option.title}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div *ngIf="data.renderas=='checkbox'" class="verticalPadding">
+    <mat-checkbox (change)="data.value=!data.value" matTooltip="{{data.describe}}" [checked]="data.value">{{data.title}}</mat-checkbox>
+  </div>
+</div>

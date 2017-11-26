@@ -1,27 +1,29 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 declare var chrome:any;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
+import { DialogsettingsComponent } from '../dialogsettings/dialogsettings.component'
 
 import {DataSource} from '@angular/cdk/collections';
-import {MdSort} from '@angular/material';
+import {MatSort} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 
-
 @Component({
   selector: 'app-customcode',
   templateUrl: './customcode.component.html',
-  styleUrls: ['./customcode.component.css']
+  styleUrls: ['./customcode.component.css', '../_app.general.scss']
 })
 export class CustomcodeComponent implements OnInit {
 
   @Input() settings: any;
 
-  @ViewChild(MdSort) sort: MdSort;
+  @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
   ngOnInit() {}
 
   displayedColumns = ['activated', 'edit', 'name', 'websites', 'delete'];
@@ -30,13 +32,6 @@ export class CustomcodeComponent implements OnInit {
 
   fn_initialize(settings) {
     this.settings=settings;
-    if(!this.settings.autorun.customcodes || this.settings.autorun.customcodes.length==0)
-    {
-      this.settings.autorun.customcodes =
-      [
-        {id:'sample-1', name:'Hide all images on Yahoo', websites:'yahoo.com', script:'Array.from(document.getElementsByTagName("img")).forEach(function(x) {x.style.visibility="hidden"});\nwindow.addEventListener("scroll",function(e) {\n    Array.from(document.getElementsByTagName("img")).forEach(function(x) {x.style.visibility="hidden"});\n});\n', activated:false},
-      ];
-    }
 
     this.customCodeDatabase.clear();
     for(var i=0;i<this.settings.autorun.customcodes.length;i++)
@@ -61,7 +56,24 @@ export class CustomcodeComponent implements OnInit {
   }
 
   fn_edit(element, mode){
+    if(mode == 'setting')
+    {
+      console.log(element);
+      let dialogRef = this.dialog.open(DialogsettingsComponent, {
+        width: '360px',
+        data: element
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if(result == true){
+          chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+        }
+      });
+    }
+    else
+    {
       window.open('https://www.swiftformatter.com/autocode'+(element?'?id='+element.id:'')+(mode?'&focus='+mode:''), '_blank');
+    }
   }
 
   fn_change_activated(element)
@@ -124,7 +136,7 @@ export class CustomCodeDatabase {
  * should be rendered.
  */
 export class CustomCodeDataSource extends DataSource<any> {
-  constructor(private _CustomCodeDatabase: CustomCodeDatabase, private _sort: MdSort) {
+  constructor(private _CustomCodeDatabase: CustomCodeDatabase, private _sort: MatSort) {
     super();
   }
 

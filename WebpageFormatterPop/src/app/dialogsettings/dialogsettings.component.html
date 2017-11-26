@@ -1,0 +1,11 @@
+<h4 mat-dialog-title style="text-align:center">
+  {{data.name}} settings
+</h4>
+
+<app-autocodeparameterrender *ngFor="let parameter of tempparameters" [data]="parameter"></app-autocodeparameterrender>
+
+<div mat-dialog-actions style="float:right">
+  <button mat-button (click)="onCloseClick(true)" tabindex="2">Apply</button>
+  <button mat-button (click)="onCloseClick(false)" tabindex="-1">Cancel</button>
+</div>
+

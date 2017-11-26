@@ -1,20 +1,20 @@
 
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 declare var chrome:any;
 
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
-  styleUrls: ['./transfer.component.css']
+  styleUrls: ['./transfer.component.css', '../_app.general.scss']
 })
 export class TransferComponent implements OnInit {
 
   settings;
   settingsText;
 
-  constructor(public snackBar: MdSnackBar, private cdr: ChangeDetectorRef) {}
+  constructor(public snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {}
   ngOnInit() {}
 
   fn_initialize(settings) {
@@ -86,7 +86,6 @@ export class TransferComponent implements OnInit {
       ];
       p.autorun.customcodes =
       [
-        {id:'sample-1', name:'Hide all images on Yahoo', websites:'yahoo.com', script:'Array.from(document.getElementsByTagName("img")).forEach(function(x) {x.style.visibility="hidden"});\nwindow.addEventListener("scroll",function(e) {\n    Array.from(document.getElementsByTagName("img")).forEach(function(x) {x.style.visibility="hidden"});\n});\n', activated:false},
       ];
       this.settingsText=JSON.stringify(p, null, "    ");
       this.snackBar.open('The settings JSON is changed to default value!', '', {duration: 5000});

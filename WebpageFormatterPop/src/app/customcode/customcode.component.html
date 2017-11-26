@@ -3,73 +3,78 @@
   <div class="statusarea">
     <div class="title">
       <div>
-        Run your own JS code when web page is loaded.
+        Run JS code of activated Auto Runs when webpage is loaded.
       </div>
     </div>
     <div>
-      <md-slide-toggle [checked]="settings.autorun.running" (change)="fn_change_running()">
-        <span *ngIf="settings.autorun.running">ON</span>
-        <span *ngIf="!settings.autorun.running">OFF</span>
-      </md-slide-toggle>
+      <!--<mat-slide-toggle [checked]="settings.autorun.running" (change)="fn_change_running()">-->
+        <!--<span *ngIf="settings.autorun.running">ON</span>-->
+        <!--<span *ngIf="!settings.autorun.running">OFF</span>-->
+      <!--</mat-slide-toggle>-->
     </div>
   </div>
 
   <div class="tablearea">
 
-    <md-table #table [dataSource]="dataSource" mdSort>
+    <mat-table #table [dataSource]="dataSource" matSort>
 
-      <ng-container mdColumnDef="activated">
-        <md-header-cell *mdHeaderCellDef md-sort-header [ngClass]="'customWidthClass_activated'">
+      <ng-container matColumnDef="activated">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass_activated'">
           Activated
-        </md-header-cell>
-        <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_activated customWidthClass_center'">
-          <md-checkbox [(ngModel)]="element.activated" (change)="fn_change_activated(element)"></md-checkbox>
-        </md-cell>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_activated customWidthClass_center'">
+          <mat-checkbox [(ngModel)]="element.activated" (change)="fn_change_activated(element)"></mat-checkbox>
+        </mat-cell>
       </ng-container>
 
-      <ng-container mdColumnDef="edit">
-        <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'">
-          <button md-icon-button mdTooltip="New" mdTooltipPosition="below"  >
-            <md-icon class="md-24 accenthover" (click)="fn_edit(null, null)" aria-label="add">add</md-icon>
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_icon'">
+          <button mat-icon-button matTooltip="Create your own Auto Run code" matTooltipPosition="below"  >
+            <mat-icon class="mat-24 accenthover" (click)="fn_edit(null, null)" aria-label="add">add</mat-icon>
           </button>
-        </md-header-cell>
-        <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
-          <button md-icon-button mdTooltip="Edit" mdTooltipPosition="below"  >
-            <md-icon class="md-24 accenthover" (click)="fn_edit(element, 'script')" aria-label="mode_edit">mode_edit</md-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_icon'">
+          <button mat-icon-button matTooltip="Edit Auto Run script" matTooltipPosition="below"  >
+            <mat-icon class="mat-24 accenthover" (click)="fn_edit(element, 'script')" aria-label="mode_edit">mode_edit</mat-icon>
           </button>
-          <button md-icon-button mdTooltip="Change setting" mdTooltipPosition="below" *ngIf="element.setting" >
-            <md-icon class="md-24 accenthover" (click)="fn_edit(element, 'setting')" aria-label="setting">settings</md-icon>
+          <button mat-icon-button matTooltip="Change settings" matTooltipPosition="below" *ngIf="element.parameters && element.parameters.length>0" >
+            <mat-icon class="mat-24 accenthover" (click)="fn_edit(element, 'setting')" aria-label="setting">settings</mat-icon>
           </button>
-        </md-cell>
+        </mat-cell>
       </ng-container>
 
-      <ng-container mdColumnDef="name">
-        <md-header-cell *mdHeaderCellDef md-sort-header> Name </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.name}} </md-cell>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{element.name}}
+          <span *ngIf="element.describe" class="small-mat-icon">
+            <mat-icon matTooltip="{{element.describe}}" class="cursordefault" aria-label="help">help</mat-icon>
+          </span>
+        </mat-cell>
       </ng-container>
 
-      <ng-container mdColumnDef="websites">
-        <md-header-cell *mdHeaderCellDef md-sort-header> Websites </md-header-cell>
-        <md-cell *mdCellDef="let element"> {{element.websites}} </md-cell>
+      <ng-container matColumnDef="websites">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Websites </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.websites}} </mat-cell>
       </ng-container>
 
-      <ng-container mdColumnDef="delete" >
-        <md-header-cell *mdHeaderCellDef [ngClass]="'customWidthClass_icon'"></md-header-cell>
-        <md-cell *mdCellDef="let element" [ngClass]="'customWidthClass_icon'">
-          <button md-icon-button [mdMenuTriggerFor]="menudelete" mdTooltip="Delete" mdTooltipPosition="below"  >
-            <md-icon class="md-24 accenthover" aria-label="delete">remove_circle</md-icon>
+      <ng-container matColumnDef="delete" >
+        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_icon'"></mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_icon'">
+          <button mat-icon-button [matMenuTriggerFor]="menudelete" matTooltip="Delete" matTooltipPosition="below"  >
+            <mat-icon class="mat-24 accenthover" aria-label="delete">remove_circle</mat-icon>
           </button>
-          <md-menu #menudelete="mdMenu">
-            <button md-menu-item disabled>Delete "{{element.name}}"?</button>
-            <button md-menu-item (click)="fn_delete(element)">Yes</button>
-            <button md-menu-item>Cancel</button>
-          </md-menu>
-        </md-cell>
+          <mat-menu #menudelete="matMenu">
+            <button mat-menu-item disabled>Delete "{{element.name}}"?</button>
+            <button mat-menu-item (click)="fn_delete(element)">Yes</button>
+            <button mat-menu-item>Cancel</button>
+          </mat-menu>
+        </mat-cell>
       </ng-container>
 
-      <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-      <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
-    </md-table>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
   </div>
 

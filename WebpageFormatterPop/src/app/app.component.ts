@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {}
 
-  settings={running:false, clicktohide:{}, imagehoving:{}, autorun:{}};
+  settings={running:false, clicktohide:{}, imagehoving:{}, autorun:{}, starttab:0};
   public ngAfterViewInit(){
   }
 
@@ -32,13 +32,16 @@ export class AppComponent implements OnInit {
 
   selectedTab;
   fn_selectedTabChange(e:any) {
+    this.settings.starttab=e.index;
+	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+
     this.selectedTab='';
-    if(e.index==3)
+    if(e.index==1)
     {
         this.selectedTab='customcode';
         this.customcode.fn_initialize(this.settings);
     }
-    else if(e.index==4)
+    else if(e.index==2)
     {
       this.transfer.fn_initialize(this.settings);
     }
