@@ -1,4 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<!--The content below is only a placeholder and can be replaced.-->
 <div class="main">
 
   <div class="labeldiv">
@@ -6,48 +7,42 @@
       Webpage formatter
     </h3>
     <div class="mainstatusarea">
-      <md-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
+      <mat-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
         <span *ngIf="settings.running">ON</span>
         <span *ngIf="!settings.running">OFF</span>
-      </md-slide-toggle>
+      </mat-slide-toggle>
     </div>
   </div>
 
-  <md-tab-group class="tabarea" (selectChange)="fn_selectedTabChange($event)">
-    <md-tab label="Tools">
+  <mat-tab-group [selectedIndex]="settings.starttab" class="tabarea" (selectChange)="fn_selectedTabChange($event)">
+    <mat-tab label="Tools">
       <app-toolslist [(settings)]="settings"></app-toolslist>
-    </md-tab>
-    <md-tab label="Image">
-      <app-imagehoving [(settings)]="settings"></app-imagehoving>
-    </md-tab>
-    <md-tab label="Hide">
-      <app-clicktotrigger [(settings)]="settings"></app-clicktotrigger>
-    </md-tab>
-    <md-tab label="Auto run">
+    </mat-tab>
+    <mat-tab label="Auto run">
       <app-customcode #customcode [(settings)]="settings" ></app-customcode>
-    </md-tab>
-    <md-tab label="Settings" >
+    </mat-tab>
+    <mat-tab label="Settings" >
       <app-transfer #transfer ></app-transfer>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
   <div class="bottom">
 
     <div class="centerdiv" *ngIf="selectedTab=='customcode'">
-      <div>
-        Share Auto Run code on
-      </div>
-      <div class="imagearea">
-        <a target="_blank" href="https://www.facebook.com/swiftformatter">
-          <img class="facebook" src="../FB-fLogo-Blue-broadcast-2.png">
-        </a>
-      </div>
       <div>
         Find official Auto Run code on
       </div>
       <div class="imagearea">
         <a target="_blank" href="https://www.swiftformatter.com/webpage">
           <img class="facebook" src="../on.png">
+        </a>
+      </div>
+      <div>
+        Find more on
+      </div>
+      <div class="imagearea">
+        <a target="_blank" href="https://www.facebook.com/swiftformatter">
+          <img class="facebook" src="../FB-fLogo-Blue-broadcast-2.png">
         </a>
       </div>
     </div>

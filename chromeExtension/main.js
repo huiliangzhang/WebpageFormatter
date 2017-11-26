@@ -1,12 +1,7 @@
 var settings;
-var addons=[];
 var autoRuns=[];
 var autoRunsArray=[];
 var syncSettings = function() {
-	for(var i=0; i<addons.length; i++)
-	{
-		addons[i].init(settings);
-	}
 	prepareAutoRun();
 }
 
@@ -78,10 +73,13 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 			p.websites=autocode.websites;
 			p.script=autocode.script;
 			p.activated=autocode.activated;
+			if(autocode.author)
+				p.author=autocode.author;
 			if(autocode.version)
 				p.version=autocode.version;
-			p.setting=autocode.setting;
-			p.settingText=autocode.settingText;
+			if(autocode.describe)
+				p.describe=autocode.describe;
+			p.parameters=autocode.parameters;
 
 	    	chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_send_autocode_saved_from_extension', attached:{detail:p}}});
 
@@ -112,23 +110,6 @@ document.addEventListener("sf_delete_autocode_from_editor", function(event) {
 		}
 	}
 });
-
-var isActivated = function(e) {
-	if(!this.setting.running)
-	{
-		return false;
-	}
-
-	if((this.setting.activationKey == 'shift' && e.shiftKey) ||
-	   (this.setting.activationKey == 'alt' && e.altKey) ||
-	   (this.setting.activationKey == 'meta' && e.metaKey) ||
-	   (this.setting.activationKey == 'control' && e.ctrlKey))
-	{
-		return true;
-	}
-
-	return false;
-}
 
 //autorun code
 var prepareAutoRun=function(){
@@ -194,7 +175,9 @@ var prepareAutoRun=function(){
 							}
         				}
 
-        				autoRun && autoRun.activate && autoRun.activate(x.setting);
+                        var settings={};
+                        x.parameters.forEach(function(x){settings[x.name]=x.value});
+        				autoRun && autoRun.activate && autoRun.activate(settings);
         			}
         			catch(e) {
         				console.log(e);

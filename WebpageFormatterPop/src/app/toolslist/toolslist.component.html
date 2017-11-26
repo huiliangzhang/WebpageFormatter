@@ -4,46 +4,46 @@
   <div class="mainarea">
 
     <div class="favlinkarea">
-      <md-chip-list>
-        <md-chip *ngFor="let dlink of settings.favlinks?.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" (click)="fn_open(dlink, false)">
+      <mat-chip-list>
+        <mat-chip *ngFor="let dlink of settings.favlinks?.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" (click)="fn_open(dlink, false)">
           {{dlink.title}}
-        </md-chip>
+        </mat-chip>
 
-        <button md-icon-button mdTooltip="Toggle edit mode" mdTooltipPosition="below" (click)="fn_editmode()">
-          <md-icon class="md-24" [ngClass]="{'accentcolor': editmode}" aria-label="mode_edit">mode_edit</md-icon>
+        <button mat-icon-button matTooltip="Toggle edit mode" matTooltipPosition="below" (click)="fn_editmode()">
+          <mat-icon class="mat-24" [ngClass]="{'accentcolor': editmode}" aria-label="mode_edit">mode_edit</mat-icon>
         </button>
 
-      </md-chip-list>
+      </mat-chip-list>
     </div>
 
     <form>
       <table *ngIf="editmode" class="editarea" cellspacing="0"><tr>
-        <td ><md-form-field class="namearea">
-          <input name="toolslist_name" mdInput #message_name maxlength="20" placeholder="Name" [(ngModel)]="newlink.title">
-          <md-hint align="end">{{message_name.value.length}} / 20</md-hint>
-        </md-form-field></td>
-        <td><md-form-field class="urlarea">
-          <input name="toolslist_value" mdInput placeholder="Website URL" [(ngModel)]="newlink.value" >
-        </md-form-field></td>
+        <td ><mat-form-field class="namearea">
+          <input name="toolslist_name" matInput #message_name maxlength="20" placeholder="Name" [(ngModel)]="newlink.title">
+          <mat-hint align="end">{{message_name.value.length}} / 20</mat-hint>
+        </mat-form-field></td>
+        <td><mat-form-field class="urlarea">
+          <input name="toolslist_value" matInput placeholder="Website URL" [(ngModel)]="newlink.value" >
+        </mat-form-field></td>
         <td>
-          <button md-icon-button mdTooltip="{{editingTip}}" mdTooltipPosition="below"  (click)="fn_upset()">
-            <md-icon class="md-24 accenthover" *ngIf="!editing" aria-label="mode_edit">add</md-icon>
-            <md-icon class="md-24 accenthover" *ngIf="editing" aria-label="mode_edit">update</md-icon>
+          <button mat-icon-button matTooltip="{{editingTip}}" matTooltipPosition="below"  (click)="fn_upset()">
+            <mat-icon class="mat-24 accenthover" *ngIf="!editing" aria-label="mode_edit">add</mat-icon>
+            <mat-icon class="mat-24 accenthover" *ngIf="editing" aria-label="mode_edit">update</mat-icon>
           </button>
         </td>
       </tr></table>
     </form>
 
     <div>
-      <md-chip-list mdPrefix #chipList>
-        <md-chip *ngFor="let dlink of settings.favlinks?.customlinks" [selectable]="selectable"
+      <mat-chip-list matPrefix #chipList>
+        <mat-chip *ngFor="let dlink of settings.favlinks?.customlinks" [selectable]="selectable"
                  (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)"
                  (click)="fn_open(dlink, true)"
                  [removable]="removable" (remove)="remove(dlink)" >
           <span [ngClass]="{'accentcolor': editing==dlink}">{{dlink.title}}</span>
-          <md-icon class="accenthover" *ngIf="editmode" mdChipRemove>cancel</md-icon>
-        </md-chip>
-      </md-chip-list>
+          <mat-icon class="accenthover" *ngIf="editmode" matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
     </div>
 
   </div>

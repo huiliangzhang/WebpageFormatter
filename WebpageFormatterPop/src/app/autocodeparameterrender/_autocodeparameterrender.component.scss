@@ -1,0 +1,21 @@
+mat-radio-button{
+  margin-right:5px;
+}
+
+.parameterrenderbox{
+  > div:first-child{
+    background-color:lightgray;
+  }
+  > div{
+    padding-left:5px;
+    padding-right:5px;
+    border-left:1px solid lightgray;
+    border-right:1px solid lightgray;
+    border-bottom:1px solid lightgray;
+  }
+  .verticalPadding{
+    padding-top:5px;
+    padding-bottom:5px;
+  }
+}
+

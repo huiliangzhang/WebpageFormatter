@@ -1,0 +1,25 @@
+$icon-small-container-size: 16px;
+$icon-small-size: 16px;
+.small-mat-icon {
+  width: $icon-small-container-size;
+  height: $icon-small-container-size;
+  line-height: $icon-small-container-size;
+
+  .mat-icon, .mat-icon-button i {
+    line-height: $icon-small-size;
+  }
+
+  .mat-icon {
+    width: $icon-small-size;
+    height: $icon-small-size;
+  }
+
+  .material-icons {
+    font-size: $icon-small-size;
+  }
+}
+
+.cursordefault{
+  cursor:default;
+}
+

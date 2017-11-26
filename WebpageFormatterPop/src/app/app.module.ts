@@ -3,33 +3,34 @@ import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-//import { AppRoutingModule } from './routing.module';
 import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
-import { ClicktotriggerComponent } from './clicktotrigger/clicktotrigger.component';
 import { CustomcodeComponent } from './customcode/customcode.component';
 import { ToolslistComponent } from './toolslist/toolslist.component';
 import { TransferComponent } from './transfer/transfer.component';
-import { ImagehovingComponent } from './imagehoving/imagehoving.component';
+import { DialogsettingsComponent } from './dialogsettings/dialogsettings.component';
+import { AutocodeparameterrenderComponent } from './autocodeparameterrender/autocodeparameterrender.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClicktotriggerComponent,
     CustomcodeComponent,
     ToolslistComponent,
     TransferComponent,
-    ImagehovingComponent
+    DialogsettingsComponent,
+    AutocodeparameterrenderComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-//    AppRoutingModule,
     MaterialModule,
     FormsModule
   ],
   providers: [],
+  entryComponents: [
+    DialogsettingsComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

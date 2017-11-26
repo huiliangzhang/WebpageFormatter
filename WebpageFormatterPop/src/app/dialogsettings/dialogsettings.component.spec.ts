@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImagehovingComponent } from './imagehoving.component';
+import { DialogsettingsComponent } from './dialogsettings.component';
 
-describe('ImagehovingComponent', () => {
-  let component: ImagehovingComponent;
-  let fixture: ComponentFixture<ImagehovingComponent>;
+describe('DialogsettingsComponent', () => {
+  let component: DialogsettingsComponent;
+  let fixture: ComponentFixture<DialogsettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImagehovingComponent ]
+      declarations: [ DialogsettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImagehovingComponent);
+    fixture = TestBed.createComponent(DialogsettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
