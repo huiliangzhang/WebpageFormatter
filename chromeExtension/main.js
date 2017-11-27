@@ -142,7 +142,7 @@ var prepareAutoRun=function(){
 			{
 				if(autoRunsArray[i].id==x.id)
 				{
-					autoRun=autoRunsArray[i].autoRun;
+					autoRun=autoRunsArray[i];
 					break;
 				}
 			}
@@ -169,18 +169,17 @@ var prepareAutoRun=function(){
 		        			eval('{'+x.script+'}');
 							if(autoRuns.length>0)
 							{
-		        				var p={id:x.id, autoRun:autoRuns[0]};
-		        				autoRunsArray.push(p);
-		        				autoRun=p.autoRun;
+		        				var autoRun={id:x.id, name:x.name, autoRun:autoRuns[0]};
+		        				autoRunsArray.push(autoRun);
 							}
         				}
 
                         var settings={};
-                        x.parameters.forEach(function(x){settings[x.name]=x.value});
-        				autoRun && autoRun.activate && autoRun.activate(settings);
+                        x.parameters.forEach(function(y){settings[y.name]=y.value});
+        				autoRun.autoRun && autoRun.autoRun.activate && autoRun.autoRun.activate(settings);
         			}
         			catch(e) {
-        				console.log(e);
+        				console.log('Failed to start Auto Run: '+x.name, e);
         			}
         		}
         		else
@@ -203,6 +202,12 @@ var prepareAutoRun=function(){
 	}
 }
 
-var internal_deactivate=function(autoRun){
-	autoRun && autoRun.deactivate && autoRun.deactivate();
+var internal_deactivate=function(p){
+    try{
+    	p&&p.autoRun && p.autoRun.deactivate && p.autoRun.deactivate();
+    }
+    catch(error)
+    {
+        console.log('Failed to deactivate Auto Run: '+p.name, error);
+    }
 }
