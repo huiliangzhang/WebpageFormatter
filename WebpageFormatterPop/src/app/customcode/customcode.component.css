@@ -29,6 +29,13 @@
   flex: 0 0 55px;
   text-align:center
 }
+.customWidthClass_websites{
+  flex: 0 0 100px;
+  text-align:center
+}
+.customWidthClass_delete{
+  flex: 0 0 30px;
+}
 
 ::ng-deep .mat-sort-header-container {
   justify-content:center

@@ -54,13 +54,13 @@
       </ng-container>
 
       <ng-container matColumnDef="websites">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Websites </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.websites}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="'customWidthClass_websites'"> Websites </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_websites'"> {{element.websites}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="delete" >
-        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_icon'"></mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_icon'">
+        <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_delete'"></mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_delete'">
           <button mat-icon-button [matMenuTriggerFor]="menudelete" matTooltip="Delete" matTooltipPosition="below"  >
             <mat-icon class="mat-24 accenthover" aria-label="delete">remove_circle</mat-icon>
           </button>
