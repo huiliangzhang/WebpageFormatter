@@ -3,9 +3,9 @@
 <div class="main">
 
   <div class="labeldiv">
-    <h3>
-      Webpage formatter
-    </h3>
+    <h2>
+      Webpage Formatter
+    </h2>
     <div class="mainstatusarea">
       <mat-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
         <span *ngIf="settings.running">ON</span>
@@ -50,7 +50,7 @@
     <div></div>
 
     <div class="centerdiv">
-      <a target="_blank" href="https://www.facebook.com/swiftformatter">
+      <a target="_blank" href="https://www.facebook.com/swiftformatter" *ngIf="selectedTab!='customcode'">
         <img class="facebook" src="../FB-fLogo-Blue-broadcast-2.png">
       </a>
       <a href="https://www.swiftformatter.com" target="_blank">swiftformatter.com</a>
