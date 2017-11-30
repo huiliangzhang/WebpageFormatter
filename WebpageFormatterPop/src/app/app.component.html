@@ -5,9 +5,9 @@
       Webpage Formatter
     </h2>
     <div class="navmenus">
-      <a (click)="changeTab('tools')" [ngClass]="{'current': settings.starttab=='tools'}" >Tools</a>
-      <a (click)="changeTab('customcode')" [ngClass]="{'current': settings.starttab=='customcode'}" >Auto Run</a>
-      <a (click)="changeTab('settings')" [ngClass]="{'current': settings.starttab=='settings'}" >Settings</a>
+      <a #link_tools (click)="changeTab('tools')" [ngClass]="{'current': settings.starttab=='tools'}" >Tools</a>
+      <a #link_customcode (click)="changeTab('customcode')" [ngClass]="{'current': settings.starttab=='customcode'}" >Auto Run</a>
+      <a #link_transfer (click)="changeTab('transfer')" [ngClass]="{'current': settings.starttab=='transfer'}" >Settings</a>
     </div>
     <div class="mainstatusarea">
       <mat-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
@@ -18,9 +18,9 @@
   </div>
 
   <div class="content">
-    <app-toolslist [hidden]="settings.starttab!='tools'" [(settings)]="settings"></app-toolslist>
-    <app-customcode [hidden]="settings.starttab!='customcode'" #customcode [(settings)]="settings" ></app-customcode>
-    <app-transfer [hidden]="settings.starttab!='settings'" [(settings)]="settings" #transfer ></app-transfer>
+    <app-toolslist [hidden]="settings.starttab!='tools'" #tools></app-toolslist>
+    <app-customcode [hidden]="settings.starttab!='customcode'" #customcode ></app-customcode>
+    <app-transfer [hidden]="settings.starttab!='transfer'" #transfer ></app-transfer>
   </div>
 
   <div class="bottom">

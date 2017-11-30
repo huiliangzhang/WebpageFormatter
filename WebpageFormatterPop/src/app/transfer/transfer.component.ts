@@ -11,7 +11,7 @@ declare var chrome:any;
 })
 export class TransferComponent implements OnInit {
 
-  @Input() settings:any;
+  settings:any;
   settingsText;
 
   constructor(public snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {}
@@ -20,6 +20,7 @@ export class TransferComponent implements OnInit {
   fn_initialize(settings) {
     this.settings=settings;
     this.settingsText=JSON.stringify(this.settings, null, "    ");
+    this.cdr.detectChanges();
   }
 
   fn_refresh(){

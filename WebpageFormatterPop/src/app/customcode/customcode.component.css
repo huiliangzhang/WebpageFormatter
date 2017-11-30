@@ -6,12 +6,14 @@
 }
 
 .tablearea{
-  position:absolute;
-  left:0;
-  right:0;
-  top:20px;
-  bottom:0px;
-  overflow:auto
+    display: flex;
+    flex-direction: column;
+    height: 305px;
+}
+
+.mat-table {
+    height: 100%;
+    overflow: auto;
 }
 
 .mat-header-row, .mat-row {

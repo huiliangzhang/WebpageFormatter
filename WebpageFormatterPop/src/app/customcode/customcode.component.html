@@ -29,15 +29,15 @@
 
       <ng-container matColumnDef="edit">
         <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_icon'">
-          <button mat-icon-button matTooltip="Create your own Auto Run code" matTooltipPosition="below"  >
+          <button mat-icon-button matTooltip="Create your own Auto Run code"  >
             <mat-icon class="mat-24 accenthover" (click)="fn_edit(null, null)" aria-label="add">add</mat-icon>
           </button>
         </mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_icon'">
-          <button mat-icon-button matTooltip="Edit Auto Run script" matTooltipPosition="below"  >
+          <button mat-icon-button matTooltip="Edit Auto Run script" >
             <mat-icon class="mat-24 accenthover" (click)="fn_edit(element, 'script')" aria-label="mode_edit">mode_edit</mat-icon>
           </button>
-          <button mat-icon-button matTooltip="Change settings" matTooltipPosition="below" *ngIf="element.parameters && element.parameters.length>0" >
+          <button mat-icon-button matTooltip="Change settings" *ngIf="element.parameters && element.parameters.length>0" >
             <mat-icon class="mat-24 accenthover" (click)="fn_edit(element, 'setting')" aria-label="setting">settings</mat-icon>
           </button>
         </mat-cell>
@@ -61,7 +61,7 @@
       <ng-container matColumnDef="delete" >
         <mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass_delete'"></mat-header-cell>
         <mat-cell *matCellDef="let element" [ngClass]="'customWidthClass_delete'">
-          <button mat-icon-button [matMenuTriggerFor]="menudelete" matTooltip="Delete" matTooltipPosition="below"  >
+          <button mat-icon-button [matMenuTriggerFor]="menudelete" matTooltip="Delete" >
             <mat-icon class="mat-24 accenthover" aria-label="delete">remove_circle</mat-icon>
           </button>
           <mat-menu #menudelete="matMenu">

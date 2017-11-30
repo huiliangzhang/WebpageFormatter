@@ -19,11 +19,11 @@ import 'rxjs/add/operator/map';
 })
 export class CustomcodeComponent implements OnInit {
 
-  @Input() settings: any;
+  settings: any;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+  constructor(public dialog: MatDialog,private cdr: ChangeDetectorRef) {}
   ngOnInit() {}
 
   displayedColumns = ['activated', 'edit', 'name', 'websites', 'delete'];
@@ -31,15 +31,16 @@ export class CustomcodeComponent implements OnInit {
   customCodeDatabase = new CustomCodeDatabase();
 
   fn_initialize(settings) {
+    if(!settings)
+      return;
     this.settings=settings;
+
     this.customCodeDatabase.clear();
     for(var i=0;i<this.settings.autorun.customcodes.length;i++)
     {
-      this.customCodeDatabase.add(this.fn_copy_for_table(this.settings.autorun.customcodes[i]));
+      this.customCodeDatabase.add((this.settings.autorun.customcodes[i]));
     }
-
     this.dataSource = new CustomCodeDataSource(this.customCodeDatabase, this.sort);
-
     this.cdr.detectChanges();
 
   }
@@ -67,7 +68,6 @@ export class CustomcodeComponent implements OnInit {
   fn_edit(element, mode){
     if(mode == 'setting')
     {
-      console.log(element);
       let dialogRef = this.dialog.open(DialogsettingsComponent, {
         width: '360px',
         data: element
@@ -102,7 +102,6 @@ export interface CustomCodeElement {
   id: string;
   name: string;
   websites: string;
-  script: string;
   activated:boolean;
 }
 
