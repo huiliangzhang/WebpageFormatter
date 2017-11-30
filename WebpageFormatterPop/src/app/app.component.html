@@ -1,11 +1,14 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="main">
 
   <div class="labeldiv">
     <h2>
       Webpage Formatter
     </h2>
+    <div class="navmenus">
+      <a (click)="changeTab('tools')" [ngClass]="{'current': settings.starttab=='tools'}" >Tools</a>
+      <a (click)="changeTab('customcode')" [ngClass]="{'current': settings.starttab=='customcode'}" >Auto Run</a>
+      <a (click)="changeTab('settings')" [ngClass]="{'current': settings.starttab=='settings'}" >Settings</a>
+    </div>
     <div class="mainstatusarea">
       <mat-slide-toggle [checked]="settings.running" (change)="fn_change_running()">
         <span *ngIf="settings.running">ON</span>
@@ -14,21 +17,15 @@
     </div>
   </div>
 
-  <mat-tab-group [selectedIndex]="settings.starttab" class="tabarea" (selectChange)="fn_selectedTabChange($event)">
-    <mat-tab label="Tools">
-      <app-toolslist [(settings)]="settings"></app-toolslist>
-    </mat-tab>
-    <mat-tab label="Auto run">
-      <app-customcode #customcode [(settings)]="settings" ></app-customcode>
-    </mat-tab>
-    <mat-tab label="Settings" >
-      <app-transfer #transfer ></app-transfer>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="content">
+    <app-toolslist [hidden]="settings.starttab!='tools'" [(settings)]="settings"></app-toolslist>
+    <app-customcode [hidden]="settings.starttab!='customcode'" #customcode [(settings)]="settings" ></app-customcode>
+    <app-transfer [hidden]="settings.starttab!='settings'" [(settings)]="settings" #transfer ></app-transfer>
+  </div>
 
   <div class="bottom">
 
-    <div class="centerdiv" *ngIf="selectedTab=='customcode'">
+    <div class="centerdiv" *ngIf="settings.starttab=='customcode'">
       <div>
         Find official Auto Run code on
       </div>
@@ -50,7 +47,7 @@
     <div></div>
 
     <div class="centerdiv">
-      <a target="_blank" href="https://www.facebook.com/swiftformatter" *ngIf="selectedTab!='customcode'">
+      <a target="_blank" href="https://www.facebook.com/swiftformatter" *ngIf="settings.starttab!='customcode'">
         <img class="facebook" src="../FB-fLogo-Blue-broadcast-2.png">
       </a>
       <a href="https://www.swiftformatter.com" target="_blank">swiftformatter.com</a>

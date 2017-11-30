@@ -1,6 +1,7 @@
 
 .mainarea{
-  height:239px;
+  height:340px;
+  width:100%;
   position:relative;
 }
 
@@ -11,11 +12,6 @@
   top:20px;
   bottom:0px;
   overflow:auto
-}
-
-.mat-table {
-  overflow: auto;
-  max-height: 505px;
 }
 
 .mat-header-row, .mat-row {

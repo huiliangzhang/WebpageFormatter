@@ -5,11 +5,11 @@
 
     <div class="favlinkarea">
       <mat-chip-list>
-        <mat-chip *ngFor="let dlink of settings.favlinks?.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" (click)="fn_open(dlink, false)">
+        <mat-chip *ngFor="let dlink of settings?.favlinks?.defaultlinks" (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)" [selectable]="selectable" (click)="fn_open(dlink, false)">
           {{dlink.title}}
         </mat-chip>
 
-        <button mat-icon-button matTooltip="Toggle edit mode" matTooltipPosition="below" (click)="fn_editmode()">
+        <button mat-icon-button matTooltip="Toggle edit mode" (click)="fn_editmode()">
           <mat-icon class="mat-24" [ngClass]="{'accentcolor': editmode}" aria-label="mode_edit">mode_edit</mat-icon>
         </button>
 
@@ -36,7 +36,7 @@
 
     <div>
       <mat-chip-list matPrefix #chipList>
-        <mat-chip *ngFor="let dlink of settings.favlinks?.customlinks" [selectable]="selectable"
+        <mat-chip *ngFor="let dlink of settings?.favlinks?.customlinks" [selectable]="selectable"
                  (mouseenter) ="fn_hover(dlink)"  (mouseleave) ="fn_hover(null)"
                  (click)="fn_open(dlink, true)"
                  [removable]="removable" (remove)="remove(dlink)" >
