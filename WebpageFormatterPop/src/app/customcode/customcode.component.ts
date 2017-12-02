@@ -31,7 +31,7 @@ export class CustomcodeComponent implements OnInit {
   customCodeDatabase = new CustomCodeDatabase();
 
   fn_initialize(settings) {
-    if(!settings)
+    if(!settings || this.settings)
       return;
     this.settings=settings;
 

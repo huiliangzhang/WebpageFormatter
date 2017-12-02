@@ -25,9 +25,7 @@ export class AppComponent implements OnInit {
       this['link_'+this.settings.starttab].nativeElement.click();
     }.bind(this));
   }
-
   ngOnInit() {}
-
   public ngAfterViewInit(){
   }
 
@@ -37,17 +35,16 @@ export class AppComponent implements OnInit {
   }
 
   changeTab(tab) {
-    if(this.settings.starttab==tab && !this.firstTime){
-      return;
+    if(!this.firstTime){
+      if(this.settings.starttab==tab){
+        return;
+      }
+
+      this.settings.starttab=tab;
+      chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
     }
     this.firstTime=false;
 
-    this.settings.starttab=tab;
-	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
-
-    this.internal_initialize_tab(tab);
-  }
-  internal_initialize_tab(tab){
     this[tab].fn_initialize(this.settings);
   }
 

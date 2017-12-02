@@ -10,7 +10,7 @@ var settings;
 settings = JSON.parse(localStorage.getItem('settings'));
 if(!settings)
 {
-  settings = {running: true, version:1};
+  settings = {running: true, version:1, starttab:'tools'};
 }
 if(!settings.favlinks)
 {
