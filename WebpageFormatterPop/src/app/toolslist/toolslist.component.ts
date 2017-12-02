@@ -9,10 +9,15 @@ declare var chrome:any;
 })
 export class ToolslistComponent implements OnInit {
 
-  @Input() settings: any;
+  settings: any;
 
   constructor(private cdr: ChangeDetectorRef) {}
   ngOnInit() {}
+
+  fn_initialize(settings){
+    this.settings=settings;
+    this.cdr.detectChanges();
+  }
 
   hovering={value:''};
   fn_hover(dlink) {

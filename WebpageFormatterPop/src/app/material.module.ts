@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import {
+  MatTabsModule,
   MatRadioModule,
   MatDialogModule,
   MatSnackBarModule,
@@ -8,11 +9,10 @@ import {
   MatSortModule,
   MatCheckboxModule,
   MatMenuModule,
-  MatToolbarModule,
+  //MatToolbarModule,
   MatIconModule,
-  MatCardModule,
+  //MatCardModule,
   MatSlideToggleModule,
-  MatTabsModule,
   MatSelectModule,
   MatTableModule,
   MatChipsModule,
@@ -22,6 +22,7 @@ import {
 
 @NgModule({
   imports: [
+    MatTabsModule,
     MatRadioModule,
     MatDialogModule,
     MatSnackBarModule,
@@ -29,11 +30,10 @@ import {
     MatSortModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule,
+    //MatToolbarModule,
     MatIconModule,
-    MatCardModule,
+    //MatCardModule,
     MatSlideToggleModule,
-    MatTabsModule,
     MatSelectModule,
     MatTableModule,
     MatChipsModule,
@@ -41,6 +41,7 @@ import {
     MatInputModule
   ],
   exports: [
+    MatTabsModule,
     MatRadioModule,
     MatDialogModule,
     MatSnackBarModule,
@@ -48,11 +49,10 @@ import {
     MatSortModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatToolbarModule,
+    //MatToolbarModule,
     MatIconModule,
-    MatCardModule,
+    //MatCardModule,
     MatSlideToggleModule,
-    MatTabsModule,
     MatSelectModule,
     MatTableModule,
     MatChipsModule,

@@ -1,6 +1,6 @@
 
 .mainarea{
-  max-height:230px;
+  max-height:330px;
   overflow:auto;
 }
 
@@ -8,7 +8,7 @@
   margin-top:10px;
 }
 
-.mainarea md-chip{
+.mainarea mat-chip{
   cursor:pointer;
 }
 

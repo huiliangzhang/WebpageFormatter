@@ -5,23 +5,27 @@ declare var chrome:any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css', './_app.component.scss']
 })
 export class AppComponent implements OnInit {
 
+  @ViewChild('tools') tools;
   @ViewChild('customcode') customcode;
   @ViewChild('transfer') transfer;
 
+  @ViewChild('link_tools') link_tools;
+  @ViewChild('link_customcode') link_customcode;
+  @ViewChild('link_transfer') link_transfer;
+
+  settings={running:false, starttab:'tools'};
+  firstTime=true;
   constructor(private cdr: ChangeDetectorRef) {
     chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
       this.settings = response;
-      this.cdr.detectChanges();
+      this['link_'+this.settings.starttab].nativeElement.click();
     }.bind(this));
   }
-
   ngOnInit() {}
-
-  settings={running:false, clicktohide:{}, imagehoving:{}, autorun:{}, starttab:0};
   public ngAfterViewInit(){
   }
 
@@ -30,21 +34,19 @@ export class AppComponent implements OnInit {
 	  chrome.runtime.sendMessage({messageType: "setSettings", type:"running", value:this.settings.running});
   }
 
-  selectedTab;
-  fn_selectedTabChange(e:any) {
-    this.settings.starttab=e.index;
-	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+  changeTab(tab) {
+    if(!this.firstTime){
+      if(this.settings.starttab==tab){
+        return;
+      }
 
-    this.selectedTab='';
-    if(e.index==1)
-    {
-        this.selectedTab='customcode';
-        this.customcode.fn_initialize(this.settings);
+      this.settings.starttab=tab;
+      chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
     }
-    else if(e.index==2)
-    {
-      this.transfer.fn_initialize(this.settings);
-    }
+    this.firstTime=false;
+
+    this[tab].fn_initialize(this.settings);
   }
+
 
 }

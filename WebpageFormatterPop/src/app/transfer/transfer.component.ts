@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 
 declare var chrome:any;
@@ -11,19 +11,16 @@ declare var chrome:any;
 })
 export class TransferComponent implements OnInit {
 
-  settings;
+  settings:any;
   settingsText;
 
   constructor(public snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {}
   ngOnInit() {}
 
   fn_initialize(settings) {
-    if(this.settings)
-    {
-      return;
-    }
     this.settings=settings;
     this.settingsText=JSON.stringify(this.settings, null, "    ");
+    this.cdr.detectChanges();
   }
 
   fn_refresh(){

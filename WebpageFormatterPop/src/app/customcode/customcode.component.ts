@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, ViewChild, Input } from '@angular/core';
 declare var chrome:any;
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -19,11 +19,11 @@ import 'rxjs/add/operator/map';
 })
 export class CustomcodeComponent implements OnInit {
 
-  @Input() settings: any;
+  settings: any;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,private cdr: ChangeDetectorRef) {}
   ngOnInit() {}
 
   displayedColumns = ['activated', 'edit', 'name', 'websites', 'delete'];
@@ -31,34 +31,43 @@ export class CustomcodeComponent implements OnInit {
   customCodeDatabase = new CustomCodeDatabase();
 
   fn_initialize(settings) {
+    if(!settings || this.settings)
+      return;
     this.settings=settings;
 
     this.customCodeDatabase.clear();
     for(var i=0;i<this.settings.autorun.customcodes.length;i++)
     {
-      this.customCodeDatabase.add(this.settings.autorun.customcodes[i]);
+      this.customCodeDatabase.add((this.settings.autorun.customcodes[i]));
     }
-
     this.dataSource = new CustomCodeDataSource(this.customCodeDatabase, this.sort);
+    this.cdr.detectChanges();
 
   }
 
+  fn_copy_for_table(source){
+    return {id:source.id, name:source.name, websites:source.websites, activated:source.activated, describe:source.describe, parameters:source.parameters};
+  }
+
   fn_delete(element){
+    for(var i=0; i<this.settings.autorun.customcodes.length; i++){
+      if(this.settings.autorun.customcodes[i].id == element.id){
+        this.settings.autorun.customcodes.splice(i, 1);
 
-    let index = this.settings.autorun.customcodes.indexOf(element);
-    if (index >= 0) {
-      this.settings.autorun.customcodes.splice(index, 1);
-      this.customCodeDatabase.remove(element);
-  	  chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
+        this.customCodeDatabase.remove(element);
+        chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
 
-	    chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_delete_autocode_from_extension', attached:{detail:element}}});
+        chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_delete_autocode_from_extension', attached:{detail:element}}});
+        this.cdr.detectChanges();
+        return;
+      }
     }
+
   }
 
   fn_edit(element, mode){
     if(mode == 'setting')
     {
-      console.log(element);
       let dialogRef = this.dialog.open(DialogsettingsComponent, {
         width: '360px',
         data: element
@@ -93,7 +102,6 @@ export interface CustomCodeElement {
   id: string;
   name: string;
   websites: string;
-  script: string;
   activated:boolean;
 }
 
