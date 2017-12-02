@@ -65,7 +65,7 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 			}
 			if(!p)
 			{
-				p={id:autocode.id, activated:true};
+				p={id:autocode.id};
 				settings.autorun.customcodes.push(p);
 			}
 
@@ -80,6 +80,7 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 			if(autocode.describe)
 				p.describe=autocode.describe;
 			p.parameters=autocode.parameters;
+			p.youtubeVideoId=autocode.youtubeVideoId;
 
 	    	chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_send_autocode_saved_from_extension', attached:{detail:p}}});
 
