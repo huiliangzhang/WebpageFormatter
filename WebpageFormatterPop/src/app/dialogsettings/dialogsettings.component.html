@@ -2,7 +2,9 @@
   {{data.name}} settings
 </h4>
 
-<app-autocodeparameterrender *ngFor="let parameter of tempparameters" [data]="parameter"></app-autocodeparameterrender>
+<div class="parametersArea">
+  <app-autocodeparameterrender *ngFor="let parameter of tempparameters" [data]="parameter"></app-autocodeparameterrender>
+</div>
 
 <div mat-dialog-actions style="float:right">
   <button mat-button (click)="onCloseClick(true)" tabindex="2">Apply</button>
