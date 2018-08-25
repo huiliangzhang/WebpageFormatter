@@ -173,8 +173,8 @@ export class CustomCodeDataSource extends DataSource<any> {
 
       switch (this._sort.active) {
         case 'activated': [propertyA, propertyB] = [a.activated==true?2:1, b.activated==true?2:1]; break;
-        case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
-        case 'websites': [propertyA, propertyB] = [a.websites, b.websites]; break;
+        case 'name': [propertyA, propertyB] = [a.name?a.name.toLowerCase():'', b.name?b.name.toLowerCase():'']; break;
+        case 'websites': [propertyA, propertyB] = [a.websites?a.websites.toLowerCase():'', b.websites?b.websites.toLowerCase():'']; break;
       }
 
       let valueA = isNaN(+propertyA) ? propertyA : +propertyA;

@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
       this.settings = response;
       this['link_'+this.settings.starttab].nativeElement.click();
+      this.info.version = chrome.app.getDetails().version;
     }.bind(this));
   }
   ngOnInit() {}
@@ -48,5 +49,6 @@ export class AppComponent implements OnInit {
     this[tab].fn_initialize(this.settings);
   }
 
+  info={version:''}
 
 }

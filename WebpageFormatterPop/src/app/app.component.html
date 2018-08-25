@@ -1,9 +1,16 @@
 <div class="main">
 
   <div class="labeldiv">
-    <h2>
-      Webpage Formatter
-    </h2>
+    <div>
+      <span class="title">
+        Webpage Formatter
+      </span>
+      <span>
+        <a class="version" target="_blank" href="https://chrome.google.com/webstore/detail/webpage-formatter/oghkhbjjhjmlonobjmkinpeaiadoolfa">
+          v{{info.version}}
+        </a>
+      </span>
+    </div>
     <div class="navmenus">
       <a #link_tools (click)="changeTab('tools')" [ngClass]="{'current': settings.starttab=='tools'}" >Tools</a>
       <a #link_customcode (click)="changeTab('customcode')" [ngClass]="{'current': settings.starttab=='customcode'}" >Auto Run</a>

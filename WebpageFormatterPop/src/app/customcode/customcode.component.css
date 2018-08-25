@@ -8,7 +8,7 @@
 .tablearea{
     display: flex;
     flex-direction: column;
-    height: 305px;
+    height: 350px;
 }
 
 .mat-table {
@@ -18,6 +18,13 @@
 
 .mat-header-row, .mat-row {
   padding: 0 0;
+}
+
+.mat-header-row {
+    top: 0;
+    position: sticky;
+    z-index: 1;
+    background-color: inherit;
 }
 
 .customWidthClass_icon{

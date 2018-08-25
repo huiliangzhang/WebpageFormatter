@@ -17,6 +17,18 @@
 
   padding-left:8px;
   padding-right:8px;
+  padding-top:12px;
+  padding-bottom:13px;
+}
+
+.title{
+  font-weight:bold;
+  font-size:160%;
+  cursor:default;
+}
+.version{
+  font-size:90%;
+  color:lightgray;
 }
 
 .mainstatusarea{
