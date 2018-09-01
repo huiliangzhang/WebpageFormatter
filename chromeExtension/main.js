@@ -5,10 +5,12 @@ var syncSettings = function() {
 	prepareAutoRun();
 }
 
+/*
 chrome.runtime.sendMessage({messageType: "askSettings"}, function(response) {
 	settings = response;
 	syncSettings();
 });
+*/
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -114,6 +116,10 @@ document.addEventListener("sf_delete_autocode_from_editor", function(event) {
 
 //autorun code
 var prepareAutoRun=function(){
+	if(!settings){
+	    return;
+	}
+
 	if(settings.running && settings.autorun.running)
 	{
 		//deactivate removed autorun
@@ -212,3 +218,4 @@ var internal_deactivate=function(p){
         console.log('Failed to deactivate Auto Run: '+p.name, error);
     }
 }
+

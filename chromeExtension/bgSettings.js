@@ -237,6 +237,12 @@ var setSetting=function(keys, value) {
 
 }
 
+chrome.tabs.onUpdated.addListener(
+  function(tabId, changeInfo, tab) {
+    chrome.tabs.sendMessage(tabId, {messageType:'updateSettings', value:settings});
+  }
+);
+
 
 
 
