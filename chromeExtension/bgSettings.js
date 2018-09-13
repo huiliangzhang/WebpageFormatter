@@ -239,10 +239,27 @@ var setSetting=function(keys, value) {
 
 chrome.tabs.onUpdated.addListener(
   function(tabId, changeInfo, tab) {
-    chrome.tabs.sendMessage(tabId, {messageType:'updateSettings', value:settings});
+    chrome.tabs.sendMessage(tabId, {messageType:'updateSettings', value:settings, event:'chrome.tabs.onUpdated', changeInfo:changeInfo});
   }
 );
 
+/*
+chrome.webNavigation.onHistoryStateUpdated.addListener(
+    function(details) {
+        chrome.tabs.sendMessage(details.tabId, {messageType:'updateSettings', value:settings, event:'chrome.webNavigation.onHistoryStateUpdated', changeInfo:details});
+    }
+);
 
+chrome.webNavigation.onDOMContentLoaded.addListener(
+    function(details) {
+        chrome.tabs.sendMessage(details.tabId, {messageType:'updateSettings', value:settings, event:'chrome.webNavigation.onDOMContentLoaded', changeInfo:details});
+    }
+);
 
+chrome.webNavigation.onCompleted.addListener(
+    function(details) {
+        chrome.tabs.sendMessage(details.tabId, {messageType:'updateSettings', value:settings, event:'chrome.webNavigation.onCompleted', changeInfo:details});
+    }
+);
+*/
 

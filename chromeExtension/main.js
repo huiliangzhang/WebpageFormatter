@@ -21,7 +21,21 @@ chrome.runtime.onMessage.addListener(
 	}
 	if(request.messageType == 'updateSettings')
 	{
+
+        if(request.changeInfo && request.changeInfo.status == 'loading'){
+            return;
+        }
+
+        /* This is not needed as complete event happens before the document is changed
+        if(request.changeInfo.status != 'complete')
+            return;
+        */
+
+        //console.log(request.event, new Date().toLocaleTimeString(), request.changeInfo);
+
 		settings = request.value;
+
+		//setTimeout(syncSettings, 100);
 		syncSettings();
 	}
 	else if(request.messageType == 'notifyEditor')
@@ -58,7 +72,7 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 		if(autocode)
 		{
 			var p;
-			for(var i=0; i<settings.autorun.customcodes.length; i++)
+			for(let i=0; i<settings.autorun.customcodes.length; i++)
 			{
 				if(settings.autorun.customcodes[i].id==autocode.id)
 				{
@@ -81,7 +95,21 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 				p.version=autocode.version;
 			if(autocode.describe)
 				p.describe=autocode.describe;
-			p.parameters=autocode.parameters;
+
+			if(autocode.parameters && p.parameters){
+			    for(let j=0; j<autocode.parameters.length; j++) {
+			        for(let k=0; k<p.parameters.length; k++){
+			            if(autocode.parameters[j].name === p.parameters[k].name){
+			                if(autocode.parameters[j].type === p.parameters[k].type){
+    			                autocode.parameters[j].value = p.parameters[k].value;
+			                }
+			                break;
+			            }
+			        }
+                }
+			}
+            p.parameters=autocode.parameters;
+
 			p.youtubeVideoId=autocode.youtubeVideoId;
 
 	    	chrome.runtime.sendMessage({messageType: "notifyEditor", value:{event:'sf_send_autocode_saved_from_extension', attached:{detail:p}}});
