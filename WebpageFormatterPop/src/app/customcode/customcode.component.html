@@ -51,7 +51,7 @@
             <mat-icon matTooltip="{{element.describe}}" class="cursordefault" aria-label="help">help</mat-icon>
           </span>
           <br>
-          <span class="version">
+          <span class="version" matTooltip="Check new version" (click)="fn_check_version(element)">
             v{{element.version}}
           </span>
         </mat-cell>

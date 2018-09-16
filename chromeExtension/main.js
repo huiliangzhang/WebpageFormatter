@@ -96,18 +96,6 @@ document.addEventListener("sf_send_autocode_from_editor", function(event) {
 			if(autocode.describe)
 				p.describe=autocode.describe;
 
-			if(autocode.parameters && p.parameters){
-			    for(let j=0; j<autocode.parameters.length; j++) {
-			        for(let k=0; k<p.parameters.length; k++){
-			            if(autocode.parameters[j].name === p.parameters[k].name){
-			                if(autocode.parameters[j].type === p.parameters[k].type){
-    			                autocode.parameters[j].value = p.parameters[k].value;
-			                }
-			                break;
-			            }
-			        }
-                }
-			}
             p.parameters=autocode.parameters;
 
 			p.youtubeVideoId=autocode.youtubeVideoId;

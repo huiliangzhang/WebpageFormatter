@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef, OnInit, ViewChild, Input } from '@angular/core';
 declare var chrome:any;
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 import { DialogsettingsComponent } from '../dialogsettings/dialogsettings.component'
 
@@ -23,7 +24,7 @@ export class CustomcodeComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog,private cdr: ChangeDetectorRef) {}
+  constructor(public snackBar: MatSnackBar, public dialog: MatDialog,private cdr: ChangeDetectorRef) {}
   ngOnInit() {}
 
   displayedColumns = ['activated', 'edit', 'name', 'websites', 'delete'];
@@ -95,6 +96,49 @@ export class CustomcodeComponent implements OnInit {
     this.settings.autorun.running=!this.settings.autorun.running;
     chrome.runtime.sendMessage({messageType: "saveSettings", value:this.settings});
   }
+
+  fn_check_version(element) {
+
+    this.getJSON('https://www.swiftformatter.com/api/autorun/'+element.id+'/version', function(err, data){
+        if(err)
+        {
+            this.snackBar.open('Not found, please try again later!', '', {duration: 1000});
+        }
+        else
+        {
+            if(data.version > element.version)
+            {
+                this.snackBar.open('New version found! v'+data.version, '', {duration: 500});
+                setTimeout(function(){ window.open('https://www.swiftformatter.com/autocode?xid='+element.id, '_blank'); }, 500);
+            }
+            else
+            {
+                this.snackBar.open('Already the latest version!', '', {duration: 1000});
+            }
+        }
+    }.bind(this));
+
+  }
+
+  getJSON(url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+
+      xhr.setRequestHeader('Z-AUTH', this.settings.auth);
+      xhr.setRequestHeader('Authorization', this.settings.token);
+
+      xhr.responseType = 'json';
+      xhr.onload = function() {
+        var status = xhr.status;
+        if (status === 200) {
+          callback(null, xhr.response);
+        } else {
+          callback(status, xhr.response);
+        }
+      };
+      xhr.send();
+  };
+
 
 }
 
