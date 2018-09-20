@@ -91,13 +91,12 @@ export class TransferComponent implements OnInit {
   fn_set(){
       try{
           var p=JSON.parse(this.settingsText);
-          if(!p.clicktohide || !p.favlinks || !p.autorun || !p.imagehoving)
+          if(!p.favlinks || !p.autorun)
           {
               throw "Not a valid setting!";
           }
 
           this.settings.running=p.running;
-          this.settings.clicktohide=p.clicktohide;
           this.settings.favlinks=p.favlinks;
           this.settings.autorun=p.autorun;
           this.cdr.detectChanges();
