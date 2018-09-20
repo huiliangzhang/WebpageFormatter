@@ -3,7 +3,7 @@
 
   "name": "Webpage Formatter",
   "description": "This extension allows user changing webpage rendering",
-  "version": "1.7",
+  "version": "1.8",
   "background": {
     "scripts": [
       "bgSettings.js"
